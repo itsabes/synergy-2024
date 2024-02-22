@@ -347,7 +347,8 @@ sikatApp.service("pmkpService", function($http) {
       "Kejadian Reaksi infeksi setelah tranfusi",
       "Kelengkapan pengisian assessment awal sesudah masuk Rawat Inap",
       "Ketepatan Pelaksanaan Instruksi DPJP",
-      "Ketepatan Identifikasi Pasien"
+      "Ketepatan Identifikasi Pasien",
+      "Kepuasan Pelanggan"
     ],
     kamarOperasi: [
       "Waktu tunggu operasi elektif",
@@ -361,14 +362,16 @@ sikatApp.service("pmkpService", function($http) {
       "Tersedianya pelayanan anastesi sedasi moderate 24 jam",
       "Kejadian diskrepansi diagnosis pre dan post operasi",
       "Konversi tindakan anastesi dari lokal menjadi general",
-      "Ketepatan identifikasi pasien"
+      "Ketepatan identifikasi pasien",
+      "Kepuasan Pelanggan"
     ],
     perinatologi: [
       "Angka kejadian infeksi nosokomial",
       "Angka Kejadian pulang paksa",
       "Angka keberhasilan perawatan bayi dengan BBLR  (1500 gram-2500 gram)",
       "Kelengkapan asessment awal medis dan keperawatan pasien  di perinatologi < 24 Jam",
-      "Angka keberhasilan pengguanaan CPAP pada pasien Perina"
+      "Angka keberhasilan pengguanaan CPAP pada pasien Perina",
+      "Kepuasan Pelanggan"
     ],
     hcu: [
       "Rata-rata pasien yang kembali ke perawatan intensif dengan kasus yang sama <72 jam",
@@ -376,7 +379,8 @@ sikatApp.service("pmkpService", function($http) {
       "Ketepatan pemberian dosis obat High Alert pada pasien",
       "Kepatuhan Visit Dokter Spesialis",
       "Kematian pasien < 48 jam sejak masuk RS",
-      "Kepatuhan identifikasi pasien"
+      "Kepatuhan identifikasi pasien",
+      "Kepuasan Pelanggan"
      ],
     kamarBersalin: [
       "Kejadian kematian ibu karena persalinan akibat perdarahan",
@@ -439,7 +443,8 @@ sikatApp.service("pmkpService", function($http) {
       "Kelengkapan informed concent setelah mendapatkan informasi yang jelas",
       "Berkas rekam medis yang hilang",
       "Retensi berkas rekam medis",
-      "Hybrid rekam medis"
+      "Hybrid rekam medis",
+      "Kepuasan Pelanggan"
     ],
     kesling: [
       "Baku mutu limbah cair BOD",
@@ -461,7 +466,8 @@ sikatApp.service("pmkpService", function($http) {
       "Tidak adanya kejadian linen yang hilang",
       "Ketepatan pengelolaan linen infeksius",
       "Hasil pemeriksaan angka kuman pada linen yang dicuci memenuhi standar",
-      "Ketetapan pemilahan linen infeksius dan linen non infeksius"
+      "Ketetapan pemilahan linen infeksius dan linen non infeksius",
+      "Kepuasan Pelanggan"
     ],
     ipsrs: [
       "Kecepatan waktu menanggapi kerusakan alat ≤ 15 menit",
@@ -469,7 +475,8 @@ sikatApp.service("pmkpService", function($http) {
       "Pemantauan kerusakan CCTV",
       "Peralatan Laboratorium (dan alat ukur yang lain) yang terkalibrasi tepat waktu sesuai dengan ketentuan kalibrasi.",
       "Ketepatan waktu pemeliharaan alat medis",
-      "Terlaksananya sosialisasi perawatan ringan alat yang bisa dilakukan user oleh atem"
+      "Terlaksananya sosialisasi perawatan ringan alat yang bisa dilakukan user oleh atem",
+      "Kepuasan Pelanggan"
     ],
     k3rs: [
       "Pelaksanaan Standar Penanganan Tertusuk Jarum",
@@ -482,12 +489,14 @@ sikatApp.service("pmkpService", function($http) {
       "Kejadian bad debt pada pelayanan rawat jalan",
       "Kesesuaian antara pasien yang bayar dengan yang seharusnya membayar",
       "Kesesuaian input layanan dari unit dengan billing pembayaran",
-      "Presentase billing yang belum close dihari yang sama"
+      "Presentase billing yang belum close dihari yang sama",
+      "Kepuasan Pelanggan"
     ],
     loketPendaftaran: [
       "Kelengkapan Penginputan Data di SIMRS",
       "Kepatuhan identifikasi pasien", 
-      "Kecepatan Petugas dalam melakukan pendafataran pasien di SIMRS  (06.30 - 08.30)"
+      "Kecepatan Petugas dalam melakukan pendafataran pasien di SIMRS  (06.30 - 08.30)",
+      "Kepuasan Pelanggan"
     ],
     ambulance: [
       "Kecepatan Pelayanan Ambulance di RS < 30 Menit",
@@ -555,16 +564,18 @@ sikatApp.service("pmkpService", function($http) {
       "Jejaring pelayanan TB di wilayah Sawah Besar dengan penyakit penyerta"
     ],
     manajemenKepegawaian: [
-      "Ketepatan Waktu Pengusulan Kenaikan Pangkat", // 1
-      "Pelatihan Staf Minimal 20 jam/tahun", // 2
-      "Daftar Urut Kepangkatan", // 3
-      "Kepatuhan absenteisme pegawai  ≤ 187,5 menit per bulan " //4
+      "Pelatihan Staf Minimal 20 jam/tahun",
+      "Kepatuhan Administrasi Cuti Pegawai",
+      "Pegawai Kesehatan yang melakukan pelayanan kesehatan memiliki STR",
+      "Kepatuhan pegawai terhadap peraturan jam kerja",
+      "Kepuasan Pelanggan"
     ],
     keuangan: [
       "Kelengkapan Laporan Akuntabilitas Kinerja",
       "Cost Recovery Rate",
       "Ketepatan Waktu Penyusunan Laporan Keuangan",
-      "Ketepatan Waktu Pemberian Gaji dan tunjangan pegawai non PNS Sesuai Kesepakatan Waktu"
+      "Ketepatan Waktu Pemberian Gaji dan tunjangan pegawai non PNS Sesuai Kesepakatan Waktu",
+      "Kepuasan Pelanggan"
     ],
     timKb: [
       "Pelayanan KB (Keluarga Berencana) Pasca Salin",
@@ -593,7 +604,8 @@ sikatApp.service("pmkpService", function($http) {
       "Terselenggaranya E-MR terintegrasi",
       "Waktu tanggap pelaporan kerusakan Perangkat IT",
       "Terlaksananya target bridging dengan pihak eksternal prioritas (Jak Sehat, Satu Sehat, dan JKN Mobile)",
-      "Terupdate nya penginputan SIRS Online"
+      "Terupdate nya penginputan SIRS Online",
+      "Kepuasan Pelanggan"
     ],
     pengadaan: [
       "Ketepatan Waktu Pembayaran Dokumen SPJ",
@@ -626,7 +638,8 @@ sikatApp.service("pmkpService", function($http) {
 	  "≤ 0,01%",
 	  "100%",
 	  "100%",
-    "100%"
+    "100%",
+    "80%"
     ],
     kamarOperasi: [
       "≤ 2 hari",
@@ -640,14 +653,16 @@ sikatApp.service("pmkpService", function($http) {
        "100%",
        "100%",
        "< 5 %",
-       "100%"
+       "100%",
+       "80%"
     ],
     perinatologi: [
 	  "≤ 1,5 %",
 	  "≤ 5 %",
 	  "100%", 
 	  "100%",
-    "100%"
+    "100%",
+    "80%"
 	], 
     hcu: [
       "≤ 3 %",
@@ -656,6 +671,7 @@ sikatApp.service("pmkpService", function($http) {
       "≥ 80 %",
       "≤ 0,24 %",
       "100%",
+      "80%"
 	],
     kamarBersalin: [
       "≤ 1 %",
@@ -717,7 +733,8 @@ sikatApp.service("pmkpService", function($http) {
       "100%",
       "0%",
       "100%",
-      "100%"
+      "100%",
+      "80%"
     ],
     kesling: [
       "BOD ≤ 30 mg/l",
@@ -739,7 +756,8 @@ sikatApp.service("pmkpService", function($http) {
 	  "100%",
 	  "100%",
     "100%",
-	  "100%"
+	  "100%",
+    "80%"
     ],
     ipsrs: [
       "≥ 85 %",
@@ -747,7 +765,8 @@ sikatApp.service("pmkpService", function($http) {
       "< 5 %",
       "100%",
       "100%",
-      "100%"
+      "100%",
+      "80%"
 	],
     k3rs: ["100%", "100%", "100%", "100%"],
     kasir: [
@@ -755,9 +774,15 @@ sikatApp.service("pmkpService", function($http) {
       "0%",
       "100",
       "100",
-      "0"
+      "0",
+      "80%"
     ],
-    loketPendaftaran: ["100%","100%","100%"],
+    loketPendaftaran: [
+      "100%",
+      "100%",
+      "100%",
+      "80%"
+  ],
     ambulance: ["100%", "100%", "≥ 80 %"],
     ppi: [
       "75%",
@@ -805,12 +830,19 @@ sikatApp.service("pmkpService", function($http) {
     timPonek: ["100%"],
     timTb: ["100%"],
     manajemenKepegawaian: [
-      "100%",
-      "≥ 60%",
-      "100%",
-    "100%"
+      "190 orang",
+      "95%",
+      "95%",
+      "95%",
+      "80%"
     ],
-	keuangan: ["100%", "≥40%", "100%", "100%"],
+	keuangan: [
+    "100%", 
+    "≥40%", 
+    "100%", 
+    "100%",
+    "80%"
+  ],
   timKb: ["50%", "80%"],
   pengurusBarang: [
     "75%", 
@@ -835,7 +867,8 @@ sikatApp.service("pmkpService", function($http) {
     "100%",
     "≥ 85%",
     "100%",
-    "100%"
+    "100%",
+    "80%"
   ],
   pengadaan: [
     "80%",
@@ -898,7 +931,8 @@ sikatApp.service("pmkpService", function($http) {
       [null, 0.01], // 5
       [100, null], // 6
       [100, null], // 7
-      [100, null] // 8
+      [100, null], // 8
+      [80, null]
      
     ],
     kamarOperasi: [
@@ -913,14 +947,16 @@ sikatApp.service("pmkpService", function($http) {
       [100, null],
       [100, null],
       [null, 5],
-      [100, null]
+      [100, null],
+      [80, null]
     ],
     perinatologi: [
       [null, 1.5],
       [null, 5],
       [100, null],
       [100, null],
-      [100, null]
+      [100, null],
+      [80, null]
     ],
     hcu: [
       [null, 3],
@@ -928,7 +964,8 @@ sikatApp.service("pmkpService", function($http) {
       [100, null],
       [80, null],
       [null, 0,24],
-      [100, null]
+      [100, null],
+      [80, null]
      ],
     kamarBersalin: [
       [null, 1],
@@ -990,7 +1027,8 @@ sikatApp.service("pmkpService", function($http) {
       [100, null],
       [null, 0],
       [100, null],
-      [100, null]
+      [100, null],
+      [80, null]
     ],
     kesling: [
       [null, 30],
@@ -1012,7 +1050,8 @@ sikatApp.service("pmkpService", function($http) {
       [100, null],
       [100, null],
       [100, null],
-      [100, null]
+      [100, null],
+      [80, null]
     ],
     ipsrs: [
       [80, null],
@@ -1020,7 +1059,8 @@ sikatApp.service("pmkpService", function($http) {
       [null, 5],
       [100, null],
       [100, null],
-      [100, null]
+      [100, null],
+      [80, null]
     ],
     k3rs: [
       [100, null],
@@ -1033,12 +1073,14 @@ sikatApp.service("pmkpService", function($http) {
       [null,0],
       [100,null],
       [100,null],
-      [null,0]
+      [null,0],
+      [80,null]
     ],
     loketPendaftaran: [
       [100, null],
       [100, null],
-      [100, null]
+      [100, null],
+      [80, null]
     ],
     ambulance: [
       [100, null],
@@ -1103,16 +1145,18 @@ sikatApp.service("pmkpService", function($http) {
       [100, null]
     ],
     manajemenKepegawaian: [
-      [100, null],
-      [60, null],
-      [100, null],
-      [100, null]
+      [190, null],
+      [95, null],
+      [95, null],
+      [95, null],
+      [80, null]
     ],
     keuangan: [
       [100, null],
       [40, null],
       [100, null],
-      [100, null]
+      [100, null],
+      [80, null]
     ],
     timKb: [
       [50, null],
@@ -1141,7 +1185,8 @@ sikatApp.service("pmkpService", function($http) {
       [100, null],
       [85, null],
       [100, null],
-      [100, null]
+      [100, null],
+      [80, null]
     ],
     pengadaan: [
       [80, null],
