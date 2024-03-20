@@ -1,18 +1,28 @@
 sikatApp.service("pmkpService", function($http) {
   var dailyNames = {
     igd: [
-      "Jumlah pasien yang mendapat pertolongan life saving",
-      "Jumlah pasien yang membutuhkan penanganan life saving ",
+      "Jumlah pasien yang mendapat pertolongan life saving", 
+      "Jumlah  pasien yang membutuhkan penanganan life saving", 
+      "Jumlah Pemberi pelayanan kegawatdaruratan yang bersertifikat BLS/GELS/ALS/BTCLS",
+      "Jumlah Pemberi pelayanan kegawatdaruratan di UGD",
       "Jumlah waktu yang diperlukan sejak kedatangan pasien sampai mendapat pelayanan dokter",
       "Jumlah pasien yang disampling (min n=50)",
       "Jumlah pasien yang meninggal <24 jam sejak pasien datang",
-      "Jumlah seluruh pasien dihari tersebut",
-      "Jumlah pasien jatuh di IGD >6jam",
-      "Jumlah seluruh pasien dihari tersebut",
+      "Jumlah seluruh pasien di hari tersebut",
+      "Jumlah pasien observasi di UGD > 6 jam",
+      "Jumlah seluruh pasien di hari tersebut",
+      "Jumlah pasien jatuh di IGD",
+      "Jumlah seluruh pasien di hari tersebut",
       "Jumlah pasien yang pulang paksa",
       "Jumlah seluruh pasien di hari tersebut (kec pasien false emergency)",
+      "Jumlah waktu yang diperlukan sejak kedatangan pasien (kegawatan pada geriatri) sampai mendapat pelayanan dokter",
+      "Jumlah pasien geriatri di hari tersebut",
+      "Jumlah hari ada penumpukan pasien di IGD",
+      "Jumlah hari dalam periode observasi",
       "Jumlah pemberi pelayanan yang melakukan identifikasi pasien secara benar dalam periode observasi",
-      "Jumlah pemberi pelayanan yang diobservasi dalam periode observasi"
+      "Jumlah pemberi pelayanan yang diobservasi dalam periode obervasi",
+      "Jumlah pasien yang puas terhadap pelayanan pelayanan Gawat Darurat",
+      "Jumlah seluruh pasien di hari tersebut"
     ],
     rawatJalan: [
       "Jumlah pelayanan rawat jalan spesialistik yang buka sesuai jadwal yang sudah di tentukan",
@@ -125,7 +135,7 @@ sikatApp.service("pmkpService", function($http) {
     laboratorium: [
       "Jumlah kumulatif waktu tunggu pelayanan laboratorium",
       "Jumlah pasien yang disurvey di hari tersebut",
-      "Jumlah seluruh pasien yang diperiksa di hari tersebut dikurangi jumlah penyerahan laboratorium salah orang",
+      "jumlah seluruh pasien yang diperiksa di hari tersebut dikurangi jumlah penyerahan laboratorium salah orang",
       "Jumlah pasien pemeriksaan laboratorium di hari tersebut",
       "jumlah seluruh spesimen yang diperiksa di hari tersebut dikurangi jumlah spesimen yang tertukar",
       "jumlah spesimen di hari tersebut",
@@ -133,10 +143,11 @@ sikatApp.service("pmkpService", function($http) {
       "Jumlah pemeriksaan cito di hari tersebut",
       "Semua hasil laboratorium kritis yang dilaporkan < 30 menit",
       "Jumlah semua hasil laboratorium kritis di hari tersebut",
-      "Jumlah pemberi pelayanan yang melakukan identifikasi pasien secara benar dalam periode observasi",
-      "Jumlah pemberi pelayanan yang di observasi dalam periode observasi",
-      "Jumlah seluruh Waktu Hasil Pemeriksaan Laboratorium Rujukan Keluar",
-      "Jumlah Sampel Rujukan Keluar"
+      "Kesesuaian Baku Mutu Eksternal",
+      "Jumlah pasien laboratorium yang dilakukan identifikasi dengan tepat",
+      "Jumlah seluruh  Pasien",
+      "Jumlah Kumulatif Waktu tunggu hasil pemeriksaan laboratorium yang dirujuk",
+      "jumlah sampel yang dirujuk" 
      
     ],
     farmasi: [
@@ -146,10 +157,10 @@ sikatApp.service("pmkpService", function($http) {
       "Jumlah  pasien yang disurvey di hari tersebut",
       "Jumlah Kesalahan pemberian obat",
       "Jumlah seluruh permintaan resep",
-      "Jumlah resep polifamasi yang dikaji sesuai standar",
-      "Jumlah seluruh resep polifamasi yang dikaji",
       "Jumlah pasien yang dilakukan identifikasi dengan tepat",
-      "Jumlah seluruh pasien"
+      "Jumlah seluruh pasien",
+      "Jumlah resep polifamasi yang dikaji sesuai standar",
+      "Jumlah seluruh resep polifamasi yang dikaji"
     ],
     gizi: [
       "Jumlah pasien rawat inap yang disurvei yang mendapat makanan tepat waktu dalam satu bulan",
@@ -326,11 +337,13 @@ sikatApp.service("pmkpService", function($http) {
       "Kemampuan menangani life saving anak dan dewasa",
       "Pemberi pelayanan kegawat daruratan yang bersertifikat BLS/PPGD/GELS/ALS",
       "Waktu tanggap Pelayanan Dokter di Gawat Darurat",
-      "Kepuasan pelanggan di Gawat Darurat",
       "Kematian Pasien ≤ 24 jam di Gawat Darurat",
       "Lama observasi pasien di IGD",
+      "Jumlah pasien jatuh di IGD",
       "Kejadian pulang paksa di IGD",
+      "Respon time penanganan kegawatdaruratan pasien geriatri di gawat darurat",
       "Tidak ada Penumpukan pasien di IGD",
+      "Ketepatan identifikasi pasien",
       "Kepatuhan identifikasi pasien"
     ],
     rawatJalan: [
@@ -404,15 +417,14 @@ sikatApp.service("pmkpService", function($http) {
       "Ketepatan identifikasi pasien"
     ],
     laboratorium: [
-      "Jumlah seluruh Waktu Hasil Pemeriksaan Laboratorium Rujukan Keluar",
+      "Waktu tunggu hasil pelayanan laboratorium",
       "Tidak adanya kesalahan pemberian hasil pemeriksaan laboratorium",
       "Tidak adanya kejadian tertukar spesimen",
       "Waktu tunggu hasil pelayanan laboratorium cito",
-      "Kepuasan Pelanggan",
       "Pelaporan hasil kritis laboratorium",
       "Kesesuaian baku mutu eksternal",
-      "Kepatuhan identifikasi pasien  di laboratorium",
-      "Kesesuaian Waktu Hasil Pemeriksaan Laboratorium Rujukan Keluar"
+      "Ketepatan identifikasi pasien di laboratorium",
+      "Ketepatan Hasil Pemeriksaan yang Dirujuk"
      ],
     farmasi: [
       "Waktu tunggu pelayanan obat jadi",
@@ -617,12 +629,14 @@ sikatApp.service("pmkpService", function($http) {
       "100%",
       "100%",
       "≤ 5 menit",
-      "≥ 70 %",
       "≤ 0,2 %",
       "5 %",
+      "0 %",
       "≤ 5 %",
+      "≤ 5 menit",
       "0%",
-      "100%"
+      "100%",
+      "70%"
     ],
     rawatJalan: [
       "100%",
@@ -910,12 +924,14 @@ sikatApp.service("pmkpService", function($http) {
       [100, null],
       [100, null],
       [null, 5],
-      [70, null],
       [null, 0.2],
+      [null, 5],
+      [null, 0],
       [null, 5],
       [null, 5],
       [null, 0],
-      [100, null]
+      [100, null],
+      [70, null]
     ],
     rawatJalan: [
       [100, null],
@@ -1196,11 +1212,16 @@ sikatApp.service("pmkpService", function($http) {
   var monthlyDisable = {
   igd: [
       [1, "numerator", "denumerator", "hasil"],
+      [2, "numerator", "denumerator", "hasil"],
       [3, "numerator", "denumerator", "hasil"],
+      [4, "numerator", "denumerator", "hasil"],
       [5, "numerator", "denumerator", "hasil"],
       [6, "numerator", "denumerator", "hasil"],
       [7, "numerator", "denumerator", "hasil"],
-      [9, "numerator", "denumerator", "hasil"]
+      [8, "numerator", "denumerator", "hasil"],
+      [9, "numerator", "denumerator", "hasil"],
+      [10, "numerator", "denumerator", "hasil"],
+      [11, "numerator", "denumerator", "hasil"]
     ],
     rawatJalan: [
       [1, "numerator", "denumerator", "hasil"],
@@ -1268,15 +1289,16 @@ sikatApp.service("pmkpService", function($http) {
       [2, "numerator", "denumerator", "hasil"],
       [3, "numerator", "denumerator", "hasil"],
       [4, "numerator", "denumerator", "hasil"],
+      [5, "numerator", "denumerator", "hasil"],
       [6, "numerator", "denumerator", "hasil"],
-      [8, "numerator", "denumerator", "hasil"],
-      [9, "numerator", "denumerator", "hasil"]
+      [7, "numerator", "denumerator", "hasil"],
+      [8, "numerator", "denumerator", "hasil"]
     ],
     farmasi: [
       [1, "numerator", "denumerator", "hasil"],
       [2, "numerator", "denumerator", "hasil"],
       [3, "numerator", "denumerator", "hasil"],
-      [7, "numerator", "denumerator", "hasil"],
+      [6, "numerator", "denumerator", "hasil"],
       [10, "numerator", "denumerator", "hasil"]
  
     ],
@@ -1392,11 +1414,16 @@ sikatApp.service("pmkpService", function($http) {
   var monthlyMapping = {
     igd: [
       [1, 1, 2],
-      [3, 3, 4],
-      [5, 5, 6],
-      [6, 7, 8],
-      [7, 9, 10],
-      [9, 11, 12]
+      [2, 3, 4],
+      [3, 5, 6],
+      [4, 7, 8],
+      [5, 9, 10],
+      [6, 11, 12],
+      [7, 13, 14],
+      [8, 15, 16],
+      [9, 17, 18],
+      [10, 19, 20],
+      [11, 21, 22]
     ],
     rawatJalan: [
       [1, 1, 2],
@@ -1467,15 +1494,16 @@ sikatApp.service("pmkpService", function($http) {
       [2, 3, 4],
       [3, 5, 6],
       [4, 7, 8],
-      [6, 9, 10],
-      [8, 11, 12],
-      [9, 13, 14]
+      [5, 9, 10],
+      [6, 11, 12],
+      [7, 13, 14],
+      [8, 15, 16]
     ],
     farmasi: [
       [1, 1, 2],
       [2, 3, 4],
       [3, 5, 6],
-      [7, 7, 8],
+      [6, 7, 8],
       [10, 9, 10]
      
     ],
