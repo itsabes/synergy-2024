@@ -259,7 +259,7 @@ sikatApp.service("pmkpService", function($http) {
       "Jumlah peluang kebersihan tangan", 
       "Jumlah pasien yang mengalami infeksi VAP",
       "Jumlah hari pemasangan ventilator", 
-      "Jumlah pasien yg terinfeksi clabsi", 
+      "Jumlah pasien yang terinfeksi clabsi", 
       "Jumlah hari pemasangan Central Vena line"
     ],
     timKprs: [
