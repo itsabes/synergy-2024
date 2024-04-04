@@ -735,8 +735,8 @@ sikatApp.service("pmkpService", function($http) {
       "> 90 %",
       "100 %",
       "≤ 20 %",
-      "> 80 %",
-      "100 %"
+      "100 %",
+      "> 80 %"
 	],
     rekamMedis: [
       "100%",
@@ -1026,8 +1026,8 @@ sikatApp.service("pmkpService", function($http) {
       [90, null],
       [100, null],
       [null, 20],
-      [80, null],
-      [100, null]    
+      [100, null],
+      [80, null]    
     ],
     rekamMedis: [
       [100, null],
