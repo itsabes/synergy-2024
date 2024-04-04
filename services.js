@@ -799,8 +799,8 @@ sikatApp.service("pmkpService", function($http) {
       "≤ 2 %",
       "100%",
       "≥ 85%",
-      "< 5,8 %",
-      "< 5 %"
+      "< 5,8 ‰",
+      "< 5 ‰"
     ],
     timKprs: [
       "100%",
