@@ -1308,8 +1308,8 @@ sikatApp.service("pmkpService", function($http) {
       [7, "numerator", "denumerator", "hasil"]
     ],
     kesling: [
-      [1, "numerator", "denumerator", "hasil"],
-      [2, "numerator", "denumerator", "hasil"]
+      [8, "numerator", "denumerator", "hasil"],
+      [9, "numerator", "denumerator", "hasil"]
     ],
     cssdLinen: [
       [1, "numerator", "denumerator", "hasil"],
@@ -1513,8 +1513,8 @@ sikatApp.service("pmkpService", function($http) {
       [7, 13, 14]
     ],
     kesling: [
-      [1, 1, 2],
-      [2, 3, 4],
+      [8, 1, 2],
+      [9, 3, 4],
     ],
     cssdLinen: [
       [1, 1, 2],
