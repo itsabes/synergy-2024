@@ -206,9 +206,7 @@ sikatApp.service("pmkpService", function($http) {
     Linen: [],
     ipsrs: [
       "Jumlah laporan kerusakan alat yang ditanggapi ≤ 15 menit",
-      "Jumlah laporan kerusakan alat hari ini tersebut",
-      "Jumlah CCTV yang tidak berfungsi dengan baik",
-      "Jumlah seluruh CCTV"
+      "Jumlah laporan kerusakan alat hari ini tersebut"
     ],
     k3rs: [
       "Pelaksanaan Standar Penanganan Tertusuk Jarum",
@@ -281,8 +279,12 @@ sikatApp.service("pmkpService", function($http) {
     ],
     komiteMedis: [],
     komiteKeperawatan: [
+      "Angka di Lakukan Kredensial Perawat dan Bidan", 
+      "Jumlah Perawat dan Bidan  yang akan di lakukan Kredensial", 
       "Kelengkapan Asuhan Keperawatan Berbasis EMR", 
-      "Jumlah Pasien dalam satu bulan di berbagai Unit" 
+      "Jumlah Kelengkapan Status EMR yang di Isi Pada setiap Unit", 
+      "Angka Pelangaran Etik, disiplin perawat dan Bidan", 
+      "Jumlah Perawat dan Bidan yang Melakukan Pelangaran Etik, disiplin Perawat dan Bidan"   
     ],
     komiteNakesLain: [],
     komiteEtik: [],
@@ -483,13 +485,8 @@ sikatApp.service("pmkpService", function($http) {
       "Kepuasan Pelanggan"
     ],
     ipsrs: [
-      "Kecepatan waktu menanggapi kerusakan alat ≤ 15 menit",
-      "Ketepatan waktu pemeliharaan alat",
-      "Pemantauan kerusakan CCTV",
-      "Peralatan Laboratorium (dan alat ukur yang lain) yang terkalibrasi tepat waktu sesuai dengan ketentuan kalibrasi.",
-      "Ketepatan waktu pemeliharaan alat medis",
-      "Terlaksananya sosialisasi perawatan ringan alat yang bisa dilakukan user oleh atem",
-      "Kepuasan Pelanggan"
+      "Kecepatan waktu menanggapi kerusakan sarana dan prasarana Rumah Sakit",
+      "Peralatan Laboratorium (dan alat ukur yang lain) yang terkalibrasi tepat waktu sesuai dengan ketentuan kalibrasi"
     ],
     k3rs: [
       "Pelaksanaan Standar Penanganan Tertusuk Jarum",
@@ -775,13 +772,8 @@ sikatApp.service("pmkpService", function($http) {
     "80%"
     ],
     ipsrs: [
-      "≥ 85 %",
-      "100%",
-      "< 5 %",
-      "100%",
-      "100%",
-      "100%",
-      "80%"
+      "80%",
+      "100%"
 	],
     k3rs: ["100%", "100%", "100%", "100%"],
     kasir: [
@@ -1072,12 +1064,7 @@ sikatApp.service("pmkpService", function($http) {
     ],
     ipsrs: [
       [80, null],
-      [100, null],
-      [null, 5],
-      [100, null],
-      [100, null],
-      [100, null],
-      [80, null]
+      [100, null]
     ],
     k3rs: [
       [100, null],
@@ -1330,8 +1317,7 @@ sikatApp.service("pmkpService", function($http) {
     ],
     Linen: [],
     ipsrs: [
-      [1, "numerator", "denumerator", "hasil"],
-      [3, "numerator", "denumerator", "hasil"]
+      [1, "numerator", "denumerator", "hasil"]
     ],
     k3rs: [
       [1, "numerator", "denumerator", "hasil"],
@@ -1375,7 +1361,9 @@ sikatApp.service("pmkpService", function($http) {
     ],
     komiteMedis: [],
     komiteKeperawatan: [
-      [2, "numerator", "denumerator", "hasil"]
+      [1, "numerator", "denumerator", "hasil"],
+      [2, "numerator", "denumerator", "hasil"],
+      [3, "numerator", "denumerator", "hasil"]
     ],
     komiteNakesLain: [],
     komiteEtik: [],
@@ -1534,8 +1522,7 @@ sikatApp.service("pmkpService", function($http) {
     ],
     Linen: [],
     ipsrs: [
-      [1, 1, 2],
-      [3, 3, 4]
+      [1, 1, 2]
     ],
     k3rs: [
       [1, 1, 2],
@@ -1579,7 +1566,9 @@ sikatApp.service("pmkpService", function($http) {
     ],
     komiteMedis: [],
     komiteKeperawatan: [
-      [2, 1, 2]
+      [1, 1, 2],
+      [2, 3, 4],
+      [3, 5, 6]
     ],
     komiteNakesLain: [],
     komiteEtik: [],
