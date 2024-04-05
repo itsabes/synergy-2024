@@ -394,8 +394,8 @@ sikatApp.service("pmkpService", function($http) {
       "Kejadian VAP",
       "Ketepatan pemberian dosis obat High Alert pada pasien",
       "Kepatuhan Visit Dokter Spesialis",
-      "Kematian pasien < 48 jam sejak masuk RS",
       "Kepatuhan identifikasi pasien",
+      "Kematian pasien < 48 jam sejak masuk RS",
       "Kepuasan Pelanggan"
      ],
     kamarBersalin: [
@@ -634,7 +634,7 @@ sikatApp.service("pmkpService", function($http) {
       "≤ 5 menit",
       "0%",
       "100%",
-      "70%"
+      "80%"
     ],
     rawatJalan: [
       "100%",
@@ -681,8 +681,8 @@ sikatApp.service("pmkpService", function($http) {
       "≤ 5,8 %",
       "100%",
       "≥ 80 %",
-      "≤ 0,24 %",
       "100%",
+      "≤ 0,24 %",
       "80%"
 	],
     kamarBersalin: [
@@ -924,7 +924,7 @@ sikatApp.service("pmkpService", function($http) {
       [null, 5],
       [null, 0],
       [100, null],
-      [70, null]
+      [80, null]
     ],
     rawatJalan: [
       [100, null],
@@ -972,8 +972,8 @@ sikatApp.service("pmkpService", function($http) {
       [null, 5.8],
       [100, null],
       [80, null],
-      [null, 0,24],
       [100, null],
+      [null, 0,24],
       [80, null]
      ],
     kamarBersalin: [
