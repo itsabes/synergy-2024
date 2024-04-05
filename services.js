@@ -185,11 +185,11 @@ sikatApp.service("pmkpService", function($http) {
       "Jumlah pasien yang mendapat informasi jelas dan Informed consent yang diisi lengkap",
       "Jumlah pasien yang mendapat tindakan medis di hari tersebut",
       "Jumlah rekam medis yang hilang di hari tersebut",
+      "Jumlah berkas rekam medis",
       "Jumlah berkas rekam medis in aktif yang dipilah",
       "Jumlah target rekam medis inaktif 150 berkas rm /minggu",
       "Jumlah berkas rekam medis manual yg discan", 
-      "Jumlah berkas rekam medis",
-      "Jumlah seluruh pasien"
+      "Jumlah Berkas Rerkam Medis Yang Berobat"
     ],
     kesling: [
       "Jumlah limbah padat yang dikelola sesuai dengan Standar Prosedur Operasional", 
