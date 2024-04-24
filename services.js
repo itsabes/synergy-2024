@@ -188,8 +188,8 @@ sikatApp.service("pmkpService", function($http) {
       "Jumlah berkas rekam medis",
       "Jumlah berkas rekam medis in aktif yang dipilah",
       "Jumlah target rekam medis inaktif 150 berkas rm /minggu",
-      "Jumlah berkas rekam medis manual yg discan", 
-      "Jumlah Berkas Rerkam Medis Yang Berobat"
+      "Jumlah berkas rekam medis yg discan", 
+      "Jumlah Berkas Rerkam Medis Manual yang tersedia pada hari tersebut"
     ],
     kesling: [
       "Jumlah limbah padat yang dikelola sesuai dengan Standar Prosedur Operasional", 
