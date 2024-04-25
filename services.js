@@ -1387,7 +1387,7 @@ sikatApp.service("pmkpService", function($http) {
       [2, "numerator", "denumerator", "hasil"]
     ],
     it: [
-      [3, "numerator", "denumerator", "hasil"]
+      [2, "numerator", "denumerator", "hasil"]
     ],
     pengadaan: []
   };
@@ -1591,7 +1591,7 @@ sikatApp.service("pmkpService", function($http) {
       [2, 3, 4]
     ],
     it: [
-      [3, 1, 2]
+      [2, 1, 2]
     ],
     pengadaan: []
   };
