@@ -613,9 +613,7 @@ sikatApp.service("pmkpService", function($http) {
       "Terselenggaranya pemeliharaan jaringan berfungsi dengan baik di semua unit",
       "Terselenggaranya E-MR terintegrasi",
       "Waktu tanggap pelaporan kerusakan Perangkat IT",
-      "Terlaksananya target bridging dengan pihak eksternal prioritas (Jak Sehat, Satu Sehat, dan JKN Mobile)",
-      "Terupdate nya penginputan SIRS Online",
-      "Kepuasan Pelanggan"
+      "Terlaksananya target bridging dengan pihak eksternal prioritas (Satu Sehat)"
     ],
     pengadaan: [
       "Ketepatan Waktu Pembayaran Dokumen SPJ",
@@ -873,9 +871,7 @@ sikatApp.service("pmkpService", function($http) {
     "100%",
     "100%",
     "≥ 85%",
-    "100%",
-    "100%",
-    "80%"
+    "100%"
   ],
   pengadaan: [
     "80%",
@@ -1188,9 +1184,7 @@ sikatApp.service("pmkpService", function($http) {
       [100, null],
       [100, null],
       [85, null],
-      [100, null],
-      [100, null],
-      [80, null]
+      [100, null]
     ],
     pengadaan: [
       [80, null],
