@@ -611,7 +611,6 @@ sikatApp.service("pmkpService", function($http) {
     ],
     it: [
       "Terselenggaranya pemeliharaan jaringan berfungsi dengan baik di semua unit",
-      "Terselenggaranya E-MR terintegrasi",
       "Waktu tanggap pelaporan kerusakan Perangkat IT",
       "Terlaksananya target bridging dengan pihak eksternal prioritas (Satu Sehat)"
     ],
@@ -868,7 +867,6 @@ sikatApp.service("pmkpService", function($http) {
     "75%"
   ],
   it: [
-    "100%",
     "100%",
     "≥ 85%",
     "100%"
@@ -1181,7 +1179,6 @@ sikatApp.service("pmkpService", function($http) {
       [75, null]
     ],
     it: [
-      [100, null],
       [100, null],
       [85, null],
       [100, null]
