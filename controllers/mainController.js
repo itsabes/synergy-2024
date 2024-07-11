@@ -10,7 +10,7 @@ sikatApp.controller("mainController", function(
   }
   $rootScope.loading = false;
   $rootScope.currPage = "dashboard";
-  $scope.message = "Chart synergy 2020 & 2021 sudah bisa di download";
+  $scope.message = "Selamat Datang";
   $scope.user_name = localStorage.getItem("user_name");
   $scope.user_role = localStorage.getItem("user_role");
   $scope.user_email = localStorage.getItem("user_email");
@@ -69,7 +69,7 @@ sikatApp.controller("mainController", function(
     localStorage.removeItem("token");
     localStorage.removeItem("name");
     localStorage.removeItem("role");
-    window.location = "/synergy-2023";
+    window.location = "/synergy-2024";
   };
   $scope.getData();
   $rootScope.isNumeric = function(value) {
