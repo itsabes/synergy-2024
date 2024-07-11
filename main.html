@@ -623,6 +623,37 @@
                     </ul>
                   </li>
                   <li
+                    ng-if="user_role ==='ADMIN' || user_role ==='KARAWATINAP' || user_role ==='RAWATINAP' || user_role ==='KAKPRS' || user_role ==='KPRS'"
+                  >
+                    <a href="#" class="has-arrow"
+                      ><i class="fas fa-file-medical-alt inner-menu-icon"></i
+                      >Rawat Inap Lt.3</a
+                    >
+                    <ul aria-expanded="false" class="collapse">
+                      <li ng-if="formAExist('rawatInapAnak')">
+                        <a
+                          href="#!/forma/rawatInapAnak"
+                          ng-class="[{active: currForm=='formA' && currPage == 'rawatInapAnak'}]"
+                          >Form A</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#!/formb/rawatInapAnak"
+                          ng-class="[{active: currForm=='formB' && currPage == 'rawatInapAnak'}]"
+                          >Form B</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#!/rekap/rawatInapAnak"
+                          ng-class="[{active: currForm=='rekap' && currPage == 'rawatInapAnak'}]"
+                          >Rekap Bulanan</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li
                     ng-if="user_role ==='ADMIN' || user_role ==='KARAWATINAP' || user_role ==='KAMAROPERASI' || user_role ==='KAKPRS' || user_role ==='KPRS'"
                   >
                     <a href="#" class="has-arrow"

@@ -50,6 +50,24 @@ sikatApp.service("pmkpService", function($http) {
       "Jumlah pasien rawat inap yang dilakukan identifikasi dengan tepat",
       "Jumlah seluruh Pasien Rawat Inap"
       ],
+      rawatInapAnak: [
+        "Jumlah pasien yang divisite dokter pada pukul 06.00-14.00",
+        "Jumlah seluruh pasien rawat inap",
+        "Jumlah pasien rawat inap yang terkena infeksi nosokomial dalam satu bulan",
+        "Jumlah pasien rawat inap dalam satu bulan",
+        "Jumlah kejadian kematian pasien rawat inap > 48 jam dalam satu bulan",
+        "Jumlah seluruh pasien yang dirawat dalam satu bulan",
+        "Jumlah pasien pulang paksa dalam satu bulan",
+        "Jumlah seluruh pasien yang dirawat dalam satu bulan",
+        "Jumlah kejadian reaksi tranfusi dalam 1 bulan",
+        "Jumlah seluruh pasien yang mendapat tranfusi dalam 1 bulan",
+        "Jumlah pasien rawat inap dengan assessment awal medis dan keperawatan lengkap di EMR dalam waktu 24 jam",
+        "Jumlah seluruh pasien yang dirawat dalam satu bulan",
+        "Jumlah instruksi DPJP yang telah dilakukan oleh petugas medis dan paramedis (Pelaksanaannya maksimal 1 Shift)",
+        "Jumlah seluruh instruksi DPJP yang harus dilakukan sesuai dengan waktunya",
+        "Jumlah pasien rawat inap yang dilakukan identifikasi dengan tepat",
+        "Jumlah seluruh Pasien Rawat Inap"
+        ],
     kamarOperasi: [
       "Waktu tunggu operasi",
       "Jumlah Pasien yang dioperasi di hari tersebut",
@@ -322,6 +340,8 @@ sikatApp.service("pmkpService", function($http) {
       "Jumlah berkas klaim rawat inap pasien BPJS Kesehatan dari setiap unit",
       "Jumlah berkas klaim rawat jalan pasien BPJS Kesehatan dari setiap unit yang lengkap",
       "Jumlah berkas klaim rawat jalan pasien BPJS Kesehatan dari setiap unit",
+      "Jumlah berkas pengajuan klaim Rawat Jalan & Rawat Inap yang dipending oleh BPJS yang lengkap",
+      "Jumlah berkas pengajuan klaim Rawat Jalan & Rawat Inap yang dipending oleh BPJS",
     ],
     timHiv: [
       "Jumlah pasien beresiko HIV/AIDS yang dilakukan skrining HIV/AIDS",
@@ -356,6 +376,17 @@ sikatApp.service("pmkpService", function($http) {
       "Ketepatan identifikasi pasien"
     ],
     rawatInap: [
+      "Kepatuhan Waktu Visite Dokter",
+      "Angka kejadian infeksi nosokomial",
+      "Kematian pasien > 48 jam",
+      "Kejadian Pulang Paksa",
+      "Kejadian Reaksi infeksi setelah tranfusi",
+      "Kelengkapan pengisian assessment awal sesudah masuk Rawat Inap",
+      "Ketepatan Pelaksanaan Instruksi DPJP",
+      "Ketepatan Identifikasi Pasien",
+      "Kepuasan Pelanggan"
+    ],
+    rawatInapAnak: [
       "Kepatuhan Waktu Visite Dokter",
       "Angka kejadian infeksi nosokomial",
       "Kematian pasien > 48 jam",
@@ -603,7 +634,8 @@ sikatApp.service("pmkpService", function($http) {
     casemix: [
       "Ketepatan waktu pengajuan berkas klaim JKN per bulan",
       "Kelengkapan berkas klaim rawat inap pasien BPJS Kesehatan dari setiap unit",
-      "Kelengkapan berkas klaim rawat jalan pasien BPJS Kesehatan dari setiap unit"
+      "Kelengkapan berkas klaim rawat jalan pasien BPJS Kesehatan dari setiap unit",
+      "Jumlah berkas pengajuan klaim Rawat Jalan & Rawat Inap yang diajukan ke BPJS"
     ],
     timHiv: [
       "Terlaksananya pelayanan kesehatan pasien dengan resiko terinfeksi penyakit HIV/AIDS",
@@ -640,6 +672,17 @@ sikatApp.service("pmkpService", function($http) {
       "100%"
      ],
     rawatInap: [
+	  "≥ 80%",
+	  "≤ 1,5%",
+	  "≤ 2,5 %",
+	  "≤ 5%",
+	  "≤ 0,01%",
+	  "100%",
+	  "100%",
+    "100%",
+    "80%"
+    ],
+    rawatInapAnak: [
 	  "≥ 80%",
 	  "≤ 1,5%",
 	  "≤ 2,5 %",
@@ -860,6 +903,7 @@ sikatApp.service("pmkpService", function($http) {
   casemix: [
     "100%",
     "100%",
+    "100%",
     "100%"
   ],
   timHiv: [
@@ -927,6 +971,18 @@ sikatApp.service("pmkpService", function($http) {
       [100, null]   
     ],
     rawatInap: [
+      [80, null], // 1
+      [null, 1.5], // 2
+      [null, 2.5], // 3
+      [null, 5], // 4
+      [null, 0.01], // 5
+      [100, null], // 6
+      [100, null], // 7
+      [100, null], // 8
+      [80, null]
+     
+    ],
+    rawatInapAnak: [
       [80, null], // 1
       [null, 1.5], // 2
       [null, 2.5], // 3
@@ -1172,6 +1228,7 @@ sikatApp.service("pmkpService", function($http) {
     casemix: [
       [100, null],
       [100, null],
+      [100, null],
       [100, null]
     ],
     timHiv: [
@@ -1209,6 +1266,16 @@ sikatApp.service("pmkpService", function($http) {
      
     ],
     rawatInap: [
+      [1, "numerator", "denumerator", "hasil"],
+      [2, "numerator", "denumerator", "hasil"],
+      [3, "numerator", "denumerator", "hasil"],
+      [4, "numerator", "denumerator", "hasil"],
+      [5, "numerator", "denumerator", "hasil"],
+      [6, "numerator", "denumerator", "hasil"],
+      [7, "numerator", "denumerator", "hasil"],
+      [8, "numerator", "denumerator", "hasil"]
+    ],
+    rawatInapAnak: [
       [1, "numerator", "denumerator", "hasil"],
       [2, "numerator", "denumerator", "hasil"],
       [3, "numerator", "denumerator", "hasil"],
@@ -1380,7 +1447,8 @@ sikatApp.service("pmkpService", function($http) {
     ],
     casemix: [
       [2, "numerator", "denumerator", "hasil"],
-      [3, "numerator", "denumerator", "hasil"]
+      [3, "numerator", "denumerator", "hasil"],
+      [4, "numerator", "denumerator", "hasil"]
     ],
     timHiv: [
       [1, "numerator", "denumerator", "hasil"],
@@ -1412,6 +1480,17 @@ sikatApp.service("pmkpService", function($http) {
      
     ],
     rawatInap: [
+      [1, 1, 2],
+      [2, 3, 4],
+      [3, 5, 6],
+      [4, 7, 8],
+      [5, 9, 10],
+      [6, 11, 12],
+      [7, 13, 14],
+      [8, 15, 16]
+   
+    ],
+    rawatInapAnak: [
       [1, 1, 2],
       [2, 3, 4],
       [3, 5, 6],
@@ -1584,7 +1663,8 @@ sikatApp.service("pmkpService", function($http) {
     ],
     casemix: [
       [2, 1, 2],
-      [3, 3, 4]
+      [3, 3, 4],
+      [4, 5, 6]
     ],
     timHiv: [
       [1, 1, 2],
