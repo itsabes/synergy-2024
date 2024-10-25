@@ -247,6 +247,308 @@ sikatApp.controller("indikatorMutuNewController", function(
     $scope.getAllTindakanOleh();
   });
 
+  sikatApp.controller("indikatorMutuEditController", function(
+    $scope,
+    $rootScope,
+    $routeParams,
+    $http,
+    pmkpService
+  ) {
+    $rootScope.currPage = "indikatorMutu";
+    $scope.tanggal = $routeParams.tanggal;
+    $scope.noRawat = $routeParams.noRawat;
+    $scope.noRekamMedis = $routeParams.noRekamMedis;
+    $scope.namaPasien = $routeParams.namaPasien;
+    $scope.namaDokter = $routeParams.namaDokter;
+    $scope.kodeKamar =
+      $routeParams.kodeKamar != "null" ? $routeParams.kodeKamar : "";
+    $scope.umur = $routeParams.umur;
+    $scope.jenisKelamin = $routeParams.jenisKelamin;
+    $scope.caraBayar = $routeParams.caraBayar;
+    $scope.tglRegistrasi = $routeParams.tglRegistrasi;
+    $scope.petugasList = [];
+    $scope.insidenList = [];
+    $scope.petugasObj = {};
+    $scope.insidenObj = {};
+    $scope.insiden = "IK001";
+  
+    $scope.getData = () => {
+      var url =
+        SERVER_URL + "/api/indikatorMutu?id=" + $scope.tanggal + ";" + $scope.noRawat;
+      $http
+        .get(url, { headers: { Authorization: localStorage.getItem("token") } })
+        .then(
+          function(reqRes) {
+            if (reqRes.data && reqRes.data != "") {
+              $scope.noRawat = reqRes.data.no_rawat;
+              $scope.petugas = reqRes.data.nip;
+              $scope.lokasi = reqRes.data.lokasi;
+              $scope.unitTerkait = reqRes.data.unit_terkait;
+              $scope.pertamaMelaporkan = reqRes.data.pertama_melaporkan;
+              $scope.unitPenyebab = reqRes.data.unit_penyebab;
+              $scope.kejadianSebelumnya = reqRes.data.kejadian_sebelumnya;
+              $scope.pencegahanTerulang = reqRes.data.pencegahan_terulang;
+              $scope.tanggal =
+                reqRes.data.tgl_kejadian + " " + reqRes.data.jam_kejadian;
+              $scope.tanggalLapor =
+                reqRes.data.tgl_lapor + " " + reqRes.data.jam_lapor;
+              $scope.insiden = reqRes.data.kode_insiden;
+              $scope.identifikasi = reqRes.data.identifikasi_masalah;
+              $scope.akibat = reqRes.data.akibat;
+              $scope.tindakanInsiden = reqRes.data.tindakan_insiden;
+              $scope.rtl = reqRes.data.rtl;
+              $scope.namaPenerima = reqRes.data.nm_penerima;
+              $scope.tanggalTerima = reqRes.data.tgl_terima;
+              $scope.gradingRisiko = reqRes.data.grading_risiko;
+              $scope.petugasObj.selected = {
+                nip: reqRes.data.nip,
+                nama: reqRes.data.nama
+              };
+              $scope.insidenObj.selected = {
+                kode_insiden: reqRes.data.kode_insiden,
+                nama_insiden: reqRes.data.nama_insiden,
+                jenis_insiden: reqRes.data.jenis_insiden,
+                dampak: reqRes.data.dampak
+              };
+              $scope.jenisInsiden = reqRes.data.jenis_insiden;
+              $scope.namaInsiden = reqRes.data.nama_insiden;
+              $scope.skorDampak = reqRes.data.skor_dampak;
+              $scope.tipeInsiden = reqRes.data.tipe_insiden;
+              $scope.subtipeInsiden = reqRes.data.subtipe_insiden;
+              $scope.frekuensiKejadian = reqRes.data.frekuensi_kejadian;
+              $scope.tindakanOleh = reqRes.data.tindakan_oleh;
+            }
+          },
+          function() {
+            $.toast({
+              heading: "Error",
+              text:
+                "Error happen when trying to get data on " +
+                url +
+                ", please try again or contact support.",
+              position: "top-right",
+              loaderBg: "#ff6849",
+              icon: "error",
+              hideAfter: 4000,
+              stack: 6
+            });
+          }
+        );
+    };
+    $scope.update = () => {
+      $http
+        .put(
+          SERVER_URL + "/api/ikpLapor",
+          {
+            id: $scope.tanggal + ";" + $scope.noRawat,
+            no_rawat: $scope.noRawat,
+            nip: $scope.petugas,
+            lokasi: $scope.lokasi,
+            unit_terkait: $scope.unitTerkait,
+            pertama_melaporkan: $scope.pertamaMelaporkan,
+            unit_penyebab: $scope.unitPenyebab,
+            kejadian_sebelumnya: $scope.kejadianSebelumnya,
+            pencegahan_terulang: $scope.pencegahanTerulang,
+            tgl_kejadian: $scope.tanggal,
+            tgl_lapor: $scope.tanggalLapor,
+            kode_insiden: $scope.insiden,
+            identifikasi_masalah: $scope.identifikasi,
+            akibat: $scope.akibat,
+            tindakan_insiden: $scope.tindakanInsiden,
+            rtl: $scope.rtl,
+            nm_penerima: $scope.namaPenerima,
+            tgl_terima: $scope.tanggalTerima,
+            grading_risiko: $scope.gradingRisiko,
+            jenis_insiden: $scope.jenisInsiden,
+            nama_insiden: $scope.namaInsiden,
+            skor_dampak: $scope.skorDampak,
+            tipe_insiden: $scope.tipeInsiden,
+            subtipe_insiden: $scope.subtipeInsiden,
+            frekuensi_kejadian: $scope.frekuensiKejadian,
+            tindakan_oleh: $scope.tindakanOleh
+          },
+          { headers: { Authorization: localStorage.getItem("token") } }
+        )
+        .then(
+          function(data) {
+            swal("Success!", "Data is successfully updated.", "success");
+            window.history.back();
+          },
+          function(data) {
+            swal("Error!", "Data is failed to be updated.", "error");
+          }
+        );
+    };
+    $scope.delete = () => {
+      var url =
+        SERVER_URL +
+        "/api/ikpLapor/delete?id=" +
+        $scope.tanggal +
+        ";" +
+        $scope.noRawat;
+      $http
+        .get(url, { headers: { Authorization: localStorage.getItem("token") } })
+        .then(
+          function(reqRes) {
+            if (reqRes.data && reqRes.data != "") {
+              swal("Success!", "Data is successfully updated.", "success");
+              window.history.back();
+            }
+          },
+          function() {
+            $.toast({
+              heading: "Error",
+              text:
+                "Error happen when trying to delete data on " +
+                url +
+                ", please try again or contact support.",
+              position: "top-right",
+              loaderBg: "#ff6849",
+              icon: "error",
+              hideAfter: 4000,
+              stack: 6
+            });
+          }
+        );
+    };
+    $scope.downloadExcel = () => {
+      const data = {
+        direkturName: localStorage.getItem("nama_direktur"),
+        direkturNip: localStorage.getItem("nip_direktur"),
+        rsName: localStorage.getItem("nama_rumah_sakit"),
+        noRawat: $scope.noRawat,
+        lokasi: $scope.lokasi,
+        unitTerkait: $scope.unitTerkait,
+        pertamaMelaporkan: $scope.pertamaMelaporkan,
+        unitPenyebab: $scope.unitPenyebab,
+        kejadianSebelumnya: $scope.kejadianSebelumnya,
+        pencegahanTerulang: $scope.pencegahanTerulang,
+        tanggal: $scope.tanggal,
+        tanggalLapor: $scope.tanggalLapor,
+        insiden: $scope.insiden,
+        identifikasi: $scope.identifikasi,
+        akibat: $scope.akibat,
+        tindakanInsiden: $scope.tindakanInsiden,
+        rtl: $scope.rtl,
+        namaPenerima: $scope.namaPenerima,
+        tanggalTerima: $scope.tanggalTerima,
+        gradingRisiko: $scope.gradingRisiko,
+        petugas: $scope.petugasObj.selected
+          ? $scope.petugasObj.selected.nip +
+            " - " +
+            $scope.petugasObj.selected.nama
+          : "", // nip nama
+        jenisInsiden: $scope.jenisInsiden,
+        namaInsiden: $scope.namaInsiden,
+        skorDampak: $scope.skorDampak,
+        tipeInsiden: $scope.tipeInsiden,
+        subtipeInsiden: $scope.subtipeInsiden,
+        frekuensiKejadian: $scope.frekuensiKejadian,
+        tindakanOleh: $scope.tindakanOleh,
+  
+        noRekamMedis: $scope.noRekamMedis,
+        namaPasien: $scope.namaPasien,
+        namaDokter: $scope.namaDokter,
+        kodeKamar: $scope.kodeKamar,
+        umur: $scope.umur,
+        jenisKelamin: $scope.jenisKelamin,
+        caraBayar: $scope.caraBayar,
+        tglRegistrasi: $scope.tglRegistrasi
+      };
+      for (let i = 0; i < $scope.jenisInsidenList.length; i += 1) {
+        if ($scope.jenisInsidenList[i].id === $scope.jenisInsiden) {
+          data.jenisInsiden =
+            $scope.jenisInsidenList[i].id +
+            " - " +
+            $scope.jenisInsidenList[i].nama;
+          break;
+        }
+      }
+      for (let i = 0; i < $scope.namaInsidenList.length; i += 1) {
+        if ($scope.namaInsidenList[i].id === $scope.namaInsiden) {
+          data.namaInsiden =
+            $scope.namaInsidenList[i].id + " - " + $scope.namaInsidenList[i].nama;
+          break;
+        }
+      }
+      for (let i = 0; i < $scope.skorDampakList.length; i += 1) {
+        if ($scope.skorDampakList[i].id === $scope.skorDampak) {
+          data.skorDampak =
+            $scope.skorDampakList[i].id + " - " + $scope.skorDampakList[i].nama;
+          break;
+        }
+      }
+      for (let i = 0; i < $scope.tipeInsidenList.length; i += 1) {
+        if ($scope.tipeInsidenList[i].id === $scope.tipeInsiden) {
+          data.tipeInsiden =
+            $scope.tipeInsidenList[i].id + " - " + $scope.tipeInsidenList[i].nama;
+          break;
+        }
+      }
+      for (let i = 0; i < $scope.subtipeInsidenList.length; i += 1) {
+        if ($scope.subtipeInsidenList[i].id === $scope.subtipeInsiden) {
+          data.subtipeInsiden =
+            $scope.subtipeInsidenList[i].id +
+            " - " +
+            $scope.subtipeInsidenList[i].nama;
+          break;
+        }
+      }
+      for (let i = 0; i < $scope.frekuensiKejadianList.length; i += 1) {
+        if ($scope.frekuensiKejadianList[i].id === $scope.frekuensiKejadian) {
+          data.frekuensiKejadian =
+            $scope.frekuensiKejadianList[i].id +
+            " - " +
+            $scope.frekuensiKejadianList[i].nama;
+          break;
+        }
+      }
+      for (let i = 0; i < $scope.tindakanOlehList.length; i += 1) {
+        if ($scope.tindakanOlehList[i].id === $scope.tindakanOleh) {
+          data.tindakanOleh =
+            $scope.tindakanOlehList[i].id +
+            " - " +
+            $scope.tindakanOlehList[i].nama;
+          break;
+        }
+      }
+      const url = REPORT_URL + "/xlsx/ikpLapor";
+      pmkpService.postDownload(url, data, "ikpLapor.xlsx");
+    };
+    $scope.onSelectedPetugas = item => {
+      $scope.petugas = item.nip;
+    };
+    $scope.onTaggingPetugas = namaPetugas => {
+      return {
+        nip: namaPetugas,
+        nama: ""
+      };
+    };
+    $scope.searchPetugas = function($select) {
+      if ($select.search.length > 0) {
+        return $http
+          .get(SERVER_URL + "/api/ikpLapor/allPetugasByQuery", {
+            params: {
+              searchstr: $select.search
+            },
+            headers: { Authorization: localStorage.getItem("token") }
+          })
+          .then(function(response) {
+            $scope.petugasList = response.data;
+          });
+      }
+      return false;
+    };
+    $scope.getAllJenisInsiden();
+    $scope.getAllNamaInsiden();
+    $scope.getAllSkorDampak();
+    $scope.getAllTipeInsiden();
+    $scope.getAllSubtipeInsiden();
+    $scope.getAllFrekuensiKejadian();
+    $scope.getAllTindakanOleh();
+    $scope.getData();
+  });
+
 sikatApp.controller("ppiEditController", function(
   $scope,
   $rootScope,
@@ -389,482 +691,6 @@ sikatApp.controller("ppiEditController", function(
   };
   $scope.backToList = () => {
     window.history.back();
-  };
-  $scope.getData();
-});
-
-sikatApp.controller("ppiReportHarianController", function(
-  $scope,
-  $rootScope,
-  $http,
-  $filter,
-  $location,
-  $routeParams
-) {
-  $rootScope.currPage = "ppiReportHarian";
-  $scope.noRekamMedis = "";
-  $scope.namaPasien = "";
-  $scope.namaDokter = "";
-  $scope.kodeKamar = "";
-  $scope.tanggalDari = "";
-  $scope.tanggalSampai = "";
-  $scope.isRanap = "true";
-  if ($routeParams.isRanap) $scope.isRanap = $routeParams.isRanap;
-  if ($routeParams.kodeKamar) $scope.kodeKamar = $routeParams.kodeKamar;
-  if ($routeParams.noRekamMedis)
-    $scope.noRekamMedis = $routeParams.noRekamMedis;
-  if ($routeParams.namaPasien) $scope.namaPasien = $routeParams.namaPasien;
-  if ($routeParams.namaDokter) $scope.namaDokter = $routeParams.namaDokter;
-  if ($routeParams.tanggalDari) $scope.tanggalDari = $routeParams.tanggalDari;
-  if ($routeParams.tanggalSampai)
-    $scope.tanggalSampai = $routeParams.tanggalSampai;
-
-  $scope.loadData = () => {
-    $location.url(
-      "/ppi_report_harian?tanggalDari=" +
-        ($scope.tanggalDari ? $scope.tanggalDari : "") +
-        "&tanggalSampai=" +
-        ($scope.tanggalSampai ? $scope.tanggalSampai : "") +
-        "&kodeKamar=" +
-        $scope.kodeKamar +
-        "&noRekamMedis=" +
-        $scope.noRekamMedis +
-        "&namaPasien=" +
-        $scope.namaPasien +
-        "&namaDokter=" +
-        $scope.namaDokter +
-        "&isRanap=" +
-        $scope.isRanap
-    );
-  };
-  $scope.downloadData = () => {
-    $('#tablePpiHarian').jexcel('download');
-  }
-  $scope.getData = () => {
-    $rootScope.loading = true;
-    var url = SERVER_URL + "/api/ppi/reportHarianByQuery?q=0";
-    url += "&isRanap=" + ($scope.isRanap == "true");
-    if ($scope.kodeKamar) url += "&kodeKamar=" + $scope.kodeKamar;
-    if ($scope.noRekamMedis) url += "&noRekamMedis=" + $scope.noRekamMedis;
-    if ($scope.namaPasien) url += "&namaPasien=" + $scope.namaPasien;
-    if ($scope.namaDokter) url += "&namaDokter=" + $scope.namaDokter;
-    if ($scope.tanggalDari)
-      url +=
-        "&tanggalDari=" + $filter("date")($scope.tanggalDari, "yyyy-MM-dd");
-    if ($scope.tanggalSampai)
-      url +=
-        "&tanggalSampai=" + $filter("date")($scope.tanggalSampai, "yyyy-MM-dd");
-
-    $http
-      .get(url, { headers: { Authorization: localStorage.getItem("token") } })
-      .then(
-        function(reqRes) {
-          var dataList = reqRes.data;
-          data = [];
-          if (dataList && dataList != "") {
-            for (var i = 0; i < dataList.length; i+=1) {
-              var datum = dataList[i];
-              data.push([
-                datum.no_rkm_medis,
-                datum.nm_pasien, 
-                datum.kd_dokter?datum.kd_dokter + " - " + datum.nm_dokter:"",
-                datum.tanggal,
-                datum.ETT?datum.ETT:0,
-                datum.CVL?datum.CVL:0, 
-                datum.IVL?datum.IVL:0, 
-                datum.UC?datum.UC:0,
-                datum.VAP?datum.VAP:0,
-                datum.IAD?datum.IAD:0,
-                datum.PLEB?datum.PLEB:0,
-                datum.ISK?datum.ISK:0,
-                datum.ILO?datum.ILO:0,
-                datum.HAP?datum.HAP:0,
-                datum.Tinea?datum.Tinea:0,
-                datum.Scabies?datum.Scabies:0,
-                datum.DEKU, 
-                datum.SPUTUM?datum.SPUTUM:"-",
-                datum.DARAH?datum.DARAH:"-",
-                datum.URINE?datum.URINE:"-",
-                datum.ANTIBIOTIK?datum.ANTIBIOTIK:"-",
-                datum.KONSENTRAT?datum.KONSENTRAT:"-",
-                datum.kd_kamar?datum.kd_kamar + " " + datum.nm_bangsal:""
-              ]);
-            }
-          }
-          var colHeaders = ["No R.M", "Nama Pasien", "Nama Dokter", "Tanggal", "ETT", "CVL", 
-          "IVL", "UC", "VAP", "IAD", "PLEB", "ISK", "ILO", "HAP", "Tinea", "Scabies",
-        "DEKU", "Sputum", "Darah", "Urine", "Antibiotik", "Cairan Konsentrat", "Kamar/Bangsal"];
-            var colWidths = [90, 250, 200, 100, 50, 50, 50, 50, 50, 50, 
-              50, 50, 50, 50, 65, 70, 60, 70, 65, 60, 250, 250, 250];
-            var colAlignments = ["left", "left", "center", "center", "center", "center", 
-            "center", "center", "center", "center", "center", "center", "center", "center", 
-            "center", "center", "center", "center", "center", "center", "left", "left", "left"];
-            var columns = [
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true }
-            ];
-            $("#tablePpiHarian").jexcel("destroyAll");
-            $("#tablePpiHarian").jexcel({
-              data: data,
-              colHeaders,
-              colWidths,
-              colAlignments,
-              columns,
-              tableOverflow: true,
-              tableHeight: "500px",
-              csvHeaders:true,
-            });
-          $rootScope.loading = false;
-        },
-        function() {
-          $.toast({
-            heading: "Error",
-            text:
-              "Error happen when trying to get data on " +
-              url +
-              ", please try again or contact support.",
-            position: "top-right",
-            loaderBg: "#ff6849",
-            icon: "error",
-            hideAfter: 4000,
-            stack: 6
-          });
-        }
-      );
-  };
-  $scope.getData();
-});
-
-sikatApp.controller("ppiReportBulananController", function(
-  $scope,
-  $rootScope,
-  $http,
-  $location,
-  $routeParams
-) {
-  $rootScope.currPage = "ppiReportBulanan";
-  $scope.noRekamMedis = "";
-  $scope.namaPasien = "";
-  $scope.namaDokter = "";
-  $scope.kodeKamar = "";
-  $scope.bulan = "";
-  $scope.isRanap = "true";
-  var today = new Date();
-  $scope.bulan = today.getMonth() + 1 + "";
-  $scope.tahun = today.getFullYear() + "";
-  if ($routeParams.isRanap) $scope.isRanap = $routeParams.isRanap;
-  if ($routeParams.kodeKamar) $scope.kodeKamar = $routeParams.kodeKamar;
-  if ($routeParams.noRekamMedis)
-    $scope.noRekamMedis = $routeParams.noRekamMedis;
-  if ($routeParams.namaPasien) $scope.namaPasien = $routeParams.namaPasien;
-  if ($routeParams.namaDokter) $scope.namaDokter = $routeParams.namaDokter;
-  if ($routeParams.bulan) $scope.bulan = $routeParams.bulan;
-  if ($routeParams.tahun) $scope.tahun = $routeParams.tahun;  
-
-  $scope.loadData = () => {
-    $location.url(
-      "/ppi_report_bulanan?bulan=" +
-        ($scope.bulan ? $scope.bulan : "") +
-        "&tahun=" +
-        $scope.tahun +
-        "&kodeKamar=" +
-        $scope.kodeKamar +
-        "&noRekamMedis=" +
-        $scope.noRekamMedis +
-        "&namaPasien=" +
-        $scope.namaPasien +
-        "&namaDokter=" +
-        $scope.namaDokter +
-        "&isRanap=" +
-        $scope.isRanap
-    );
-  };
-  $scope.downloadData = () => {
-    $('#tablePpiBulanan').jexcel('download');
-  }
-  $scope.getData = () => {
-    $rootScope.loading = true;
-    var url = SERVER_URL + "/api/ppi/reportBulananByQuery?q=0";
-    url += "&isRanap=" + ($scope.isRanap == "true");
-    if ($scope.kodeKamar) url += "&kodeKamar=" + $scope.kodeKamar;
-    if ($scope.noRekamMedis) url += "&noRekamMedis=" + $scope.noRekamMedis;
-    if ($scope.namaPasien) url += "&namaPasien=" + $scope.namaPasien;
-    if ($scope.namaDokter) url += "&namaDokter=" + $scope.namaDokter;
-    if ($scope.bulan) url += "&bulan=" + $scope.bulan;
-    if ($scope.tahun) url += "&tahun=" + $scope.tahun;
-
-    $http
-      .get(url, { headers: { Authorization: localStorage.getItem("token") } })
-      .then(
-        function(reqRes) {
-          var dataList = reqRes.data;
-          data = [];
-          if (dataList && dataList != "") {
-            for (var i = 0; i < dataList.length; i+=1) {
-              var datum = dataList[i];
-              data.push([
-                datum.tanggal,
-                datum.jml_pasien,
-                datum.jml_ETT?datum.jml_ETT:0,
-                datum.jml_CVL?datum.jml_CVL:0, 
-                datum.jml_IVL?datum.jml_IVL:0, 
-                datum.jml_UC?datum.jml_UC:0,
-                datum.jml_VAP?datum.jml_VAP:0,
-                datum.jml_IAD?datum.jml_IAD:0,
-                datum.jml_PLEB?datum.jml_PLEB:0,
-                datum.jml_ISK?datum.jml_ISK:0,
-                datum.jml_ILO?datum.jml_ILO:0,
-                datum.jml_HAP?datum.jml_HAP:0,
-                datum.jml_Tinea?datum.jml_Tinea:0,
-                datum.jml_Scabies?datum.jml_Scabies:0,
-                datum.jml_DEKU?datum.jml_DEKU:0, 
-                datum.jml_SPUTUM?datum.jml_SPUTUM:0,
-                datum.jml_DARAH?datum.jml_DARAH:0,
-                datum.jml_URINE?datum.jml_URINE:0,
-                datum.jml_ANTIBIOTIK?datum.jml_ANTIBIOTIK:0,
-                datum.jml_MDR?datum.jml_MDR:0,
-                datum.jml_DIFTERI?datum.jml_DIFTERI:0,
-                datum.jml_KONSENTRAT?datum.jml_KONSENTRAT:0,
-              ]);
-            }
-          }
-          var colHeaders = ["Tanggal", "Jumlah Pasien", "ETT", "CVL", 
-          "IVL", "UC", "VAP", "IAD", "PLEB", "ISK", "ILO", "HAP", "Tinea", "Scabies",
-        "DEKU", "Sputum", "Darah", "Urine", "Antibiotik", "MDR", "DIFTERI", "KONSENTRAT"];
-            var colWidths = [100, 130, 50, 50, 50, 50, 50, 50, 
-              50, 50, 50, 50, 65, 70, 60, 70, 65, 60, 100, 60, 100, 120];
-            var colAlignments = ["left", "center", "center", "center", "center", "center", 
-            "center", "center", "center", "center", "center", "center", "center", "center", 
-            "center", "center", "center", "center", "center", "center", "center", "center"];
-            var columns = [
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true }
-            ];
-            $("#tablePpiBulanan").jexcel("destroyAll");
-            $("#tablePpiBulanan").jexcel({
-              data: data,
-              colHeaders,
-              colWidths,
-              colAlignments,
-              columns,
-              tableOverflow: true,
-              tableHeight: "500px",
-              csvHeaders:true,
-            });
-          $rootScope.loading = false;
-        },
-        function() {
-          $.toast({
-            heading: "Error",
-            text:
-              "Error happen when trying to get data on " +
-              url +
-              ", please try again or contact support.",
-            position: "top-right",
-            loaderBg: "#ff6849",
-            icon: "error",
-            hideAfter: 4000,
-            stack: 6
-          });
-        }
-      );
-  };
-  $scope.getData();
-});
-
-sikatApp.controller("ppiReportKamarController", function(
-  $scope,
-  $rootScope,
-  $http,
-  $filter,
-  $location,
-  $routeParams
-) {
-  $rootScope.currPage = "ppiReportKamar";
-  $scope.noRekamMedis = "";
-  $scope.namaPasien = "";
-  $scope.namaDokter = "";
-  $scope.tanggalDari = "";
-  $scope.tanggalSampai = "";
-  $scope.isRanap = "true";
-  if ($routeParams.isRanap) $scope.isRanap = $routeParams.isRanap;
-  if ($routeParams.noRekamMedis)
-    $scope.noRekamMedis = $routeParams.noRekamMedis;
-  if ($routeParams.namaPasien) $scope.namaPasien = $routeParams.namaPasien;
-  if ($routeParams.namaDokter) $scope.namaDokter = $routeParams.namaDokter;
-  if ($routeParams.tanggalDari) $scope.tanggalDari = $routeParams.tanggalDari;
-  if ($routeParams.tanggalSampai)
-    $scope.tanggalSampai = $routeParams.tanggalSampai;
-
-  $scope.loadData = () => {
-    $location.url(
-      "/ppi_report_kamar?tanggalDari=" +
-        ($scope.tanggalDari ? $scope.tanggalDari : "") +
-        "&tanggalSampai=" +
-        ($scope.tanggalSampai ? $scope.tanggalSampai : "") +
-        "&noRekamMedis=" +
-        $scope.noRekamMedis +
-        "&namaPasien=" +
-        $scope.namaPasien +
-        "&namaDokter=" +
-        $scope.namaDokter +
-        "&isRanap=" +
-        $scope.isRanap
-    );
-  };
-  $scope.downloadData = () => {
-    $('#tablePpiKamar').jexcel('download');
-  }
-  $scope.getData = () => {
-    $rootScope.loading = true;
-    var url = SERVER_URL + "/api/ppi/reportKamarByQuery?q=0";
-    url += "&isRanap=" + ($scope.isRanap == "true");
-    if ($scope.noRekamMedis) url += "&noRekamMedis=" + $scope.noRekamMedis;
-    if ($scope.namaPasien) url += "&namaPasien=" + $scope.namaPasien;
-    if ($scope.namaDokter) url += "&namaDokter=" + $scope.namaDokter;
-    if ($scope.tanggalDari)
-      url +=
-        "&tanggalDari=" + $filter("date")($scope.tanggalDari, "yyyy-MM-dd");
-    if ($scope.tanggalSampai)
-      url +=
-        "&tanggalSampai=" + $filter("date")($scope.tanggalSampai, "yyyy-MM-dd");
-
-    $http
-      .get(url, { headers: { Authorization: localStorage.getItem("token") } })
-      .then(
-        function(reqRes) {
-          var dataList = reqRes.data;
-          data = [];
-          if (dataList && dataList != "") {
-            for (var i = 0; i < dataList.length; i+=1) {
-              var datum = dataList[i];
-              data.push([
-                datum.kd_kamar + " - " + datum.nm_bangsal,
-                datum.jml_pasien,
-                datum.jml_ETT?datum.jml_ETT:0,
-                datum.jml_CVL?datum.jml_CVL:0, 
-                datum.jml_IVL?datum.jml_IVL:0, 
-                datum.jml_UC?datum.jml_UC:0,
-                datum.jml_VAP?datum.jml_VAP:0,
-                datum.jml_IAD?datum.jml_IAD:0,
-                datum.jml_PLEB?datum.jml_PLEB:0,
-                datum.jml_ISK?datum.jml_ISK:0,
-                datum.jml_ILO?datum.jml_ILO:0,
-                datum.jml_HAP?datum.jml_HAP:0,
-                datum.jml_Tinea?datum.jml_Tinea:0,
-                datum.jml_Scabies?datum.jml_Scabies:0,
-                datum.jml_DEKU?datum.jml_DEKU:0, 
-                datum.jml_SPUTUM?datum.jml_SPUTUM:0,
-                datum.jml_DARAH?datum.jml_DARAH:0,
-                datum.jml_URINE?datum.jml_URINE:0,
-                datum.jml_ANTIBIOTIK?datum.jml_ANTIBIOTIK:0,
-                datum.jml_MDR?datum.jml_MDR:0,
-                datum.jml_DIFTERI?datum.jml_DIFTERI:0,
-                datum.jml_KONSENTRAT?datum.jml_KONSENTRAT:0,
-              ]);
-            }
-          }
-          var colHeaders = ["Kamar/Bangsal", "Jumlah Pasien", "ETT", "CVL", 
-          "IVL", "UC", "VAP", "IAD", "PLEB", "ISK", "ILO", "HAP", "Tinea", "Scabies",
-        "DEKU", "Sputum", "Darah", "Urine", "Antibiotik", "MDR", "DIFTERI", "KONSENTRAT"];
-            var colWidths = [300, 130, 50, 50, 50, 50, 50, 50, 
-              50, 50, 50, 50, 65, 70, 60, 70, 65, 60, 100, 60, 100, 120];
-            var colAlignments = ["left", "center", "center", "center", "center", "center", 
-            "center", "center", "center", "center", "center", "center", "center", "center", 
-            "center", "center", "center", "center", "center", "center", "center", "center"];
-            var columns = [
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true },
-              { type: "text", wordWrap: true, readOnly: true }
-            ];
-            $("#tablePpiKamar").jexcel("destroyAll");
-            $("#tablePpiKamar").jexcel({
-              data: data,
-              colHeaders,
-              colWidths,
-              colAlignments,
-              columns,
-              tableOverflow: true,
-              tableHeight: "600px",
-              csvHeaders:true,
-            });
-          $rootScope.loading = false;
-        },
-        function() {
-          $.toast({
-            heading: "Error",
-            text:
-              "Error happen when trying to get data on " +
-              url +
-              ", please try again or contact support.",
-            position: "top-right",
-            loaderBg: "#ff6849",
-            icon: "error",
-            hideAfter: 4000,
-            stack: 6
-          });
-        }
-      );
   };
   $scope.getData();
 });
