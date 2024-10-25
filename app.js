@@ -44,6 +44,18 @@ sikatApp.config(function ($routeProvider) {
       templateUrl: "pages/settings.html",
       controller: "settingsController"
     })
+    .when("/indikatorMutu", {
+      templateUrl: "pages/indikatorMutuList.html",
+      controller: "indikatorMutuListController"
+    })
+    .when("/indikatorMutu_new", {
+      templateUrl: "pages/indikatorMutuNew.html",
+      controller: "indikatorMutuNewController"
+    })
+    .when("/indikatorMutu_edit", {
+      templateUrl: "pages/indikatorMutuEdit.html",
+      controller: "indikatorMutuEditController"
+    })
     .when("/forma/:id", {
       templateUrl: "pages/forma.html",
       controller: "formAController"
