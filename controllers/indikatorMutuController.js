@@ -25,7 +25,7 @@ sikatApp.controller("indikatorMutuListController", function(
     if ($routeParams.tahun) $scope.tahun = $routeParams.tahun;  
 
     $scope.addIndikatorMutu = () => {
-      $location.url("/indikatorMutu_new");
+      $location.url("/b3rs_new");
     };
     $scope.showIndikatorMutu = (id_profilindikator) => {
       $location.url(
@@ -213,6 +213,7 @@ sikatApp.controller("indikatorMutuNewController", function(
             periodeAnalisa: $scope.periodeAnalisa,
             metodePengumpulan: $scope.metodePengumpulan,
             populasiSampel: $scope.populasiSampel,
+            isiSampel: $scope.isiSampel,
             rencanaAnalisis: $scope.rencanaAnalisis,
             instrumenPengambilan: $scope.instrumenPengambilan,
             penanggungJawab: $scope.penanggungJawab
@@ -247,14 +248,6 @@ sikatApp.controller("indikatorMutuNewController", function(
       }
       return false;
     };
-    
-    $scope.getAllJenisInsiden();
-    $scope.getAllNamaInsiden();
-    $scope.getAllSkorDampak();
-    $scope.getAllTipeInsiden();
-    $scope.getAllSubtipeInsiden();
-    $scope.getAllFrekuensiKejadian();
-    $scope.getAllTindakanOleh();
   });
 
   sikatApp.controller("indikatorMutuEditController", function(

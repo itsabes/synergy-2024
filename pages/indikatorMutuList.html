@@ -84,7 +84,7 @@
               <td title="'Daftar PPI'" sortable="'ppi_tanggal_list'">
                 <a style="display: block;" href="javascript:void(0)"
                   ng-repeat="tanggal_ppi in row.ppi_tanggal_list.split(',') track by $index"
-                  ng-click="showPpi(tanggal_ppi, row.no_rawat, row.no_rkm_medis, row.nm_pasien, row.nm_dokter, row.kd_kamar)">{{ tanggal_ppi }}
+                  ng-click="showIndikatorMutu(id_profilindikator)">{{ tanggal_ppi }}
                 </a>
               </td>
               <td title="'No Rawat'" sortable="'no_rawat'">
