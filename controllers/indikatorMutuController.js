@@ -23,6 +23,16 @@ sikatApp.controller("indikatorMutuListController", function(
     if ($routeParams.namaDokter) $scope.namaDokter = $routeParams.namaDokter;
     if ($routeParams.bulan) $scope.bulan = $routeParams.bulan;
     if ($routeParams.tahun) $scope.tahun = $routeParams.tahun;  
+
+    $scope.addIndikatorMutu = () => {
+      $location.url("/indikatorMutu_new");
+    };
+    $scope.showIndikatorMutu = (id_profilindikator) => {
+      $location.url(
+        "/indikatorMutu_edit?id_profilindikator=" +
+        id_profilindikator
+      );
+    };
   
     $scope.loadData = () => {
       $location.url(
