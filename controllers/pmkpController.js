@@ -8,13 +8,39 @@ sikatApp.controller("formAController", function(
 ) {
   $rootScope.currPage = $routeParams.id;
   $rootScope.currForm = "formA";
+
+  // Tambahkan log halaman saat ini
+  console.log("Halaman saat ini:", $rootScope.currPage);
+  // Jika ingin melog semua $routeParams
+  console.log("Parameter URL saat ini:", $routeParams);
+
   // calculate latest date that can be inputted
   $scope.todayString = new moment().format("D/MMM/YYYY");
   var today = new moment();
   $rootScope.waktuKunciPmkp = localStorage.getItem("waktu_kunci_pmkp");
   $scope.latestDateToInput = today.subtract($rootScope.waktuKunciPmkp, "d");
-  $scope.dailyNames = pmkpService.getDailyNames($scope.currPage);
-  $scope.monthlyMapping = pmkpService.getMonthlyMapping($scope.currPage);
+  $scope.dailyNames = [];//pmkpService.getDailyNames($scope.currPage);
+  const formAformBMapping = new Map();
+  console.log("dailyNames before:",$scope.dailyNames);
+  pmkpService.getDynamicData($rootScope.currPage,1,result => {
+    if (result) {
+      console.log("Received data:", result.data);
+      $scope.dailyNames = result.data.map(o => o.JUDUL);
+
+      Object.keys(result.data).forEach(key => {
+        console.log(`${key}: ${result.data[key]['JUDUL']}`);
+        formAformBMapping.set(result.data[key]['JUDUL'],result.data[key]['LEVEL']);
+      });
+
+    } else {
+      console.log("No data or error occurred.");
+    }
+  });
+
+  console.log("dailyNames after:", $scope.dailyNames);
+  console.log('formAformBMapping:',formAformBMapping);
+
+  $scope.monthlyMapping = formAformBMapping;//pmkpService.getMonthlyMapping($scope.currPage);
   $scope.monthNames = pmkpService.getMonthNames();
   $scope.dataId = null;
   $scope.typeSelect = $routeParams.id;
@@ -36,7 +62,78 @@ sikatApp.controller("formAController", function(
     }
     return total;
   };
+
+  
   $scope.dailyToMonthly = (dailyData, monthlyData, utils) => {
+    pmkpService.getDynamicData($rootScope.currPage,2,result => {
+      if (result) {
+
+        console.log("Received data:", result.data);
+        let numeratorIdx = 0; 
+        let denumeratorIdx = 1;
+        Object.keys(result.data).forEach(key => {
+          
+          if (result.data[key]['STATUS']=='0'){
+
+              console.log("key:",key);
+              console.log("numeratorIdx:",numeratorIdx);
+              console.log("denumeratorIdx:",denumeratorIdx);
+
+              var specialCalc = result.data[key]['DAILYMONTHLYSPECIAL'];
+              console.log("specialCalc",specialCalc);
+        
+              if (monthlyData[key] === undefined) 
+                monthlyData[key] = {};
+        
+              console.log("monthlyData[key]",monthlyData[key]);
+              
+              monthlyData[key].numerator = utils.sumArray(dailyData[numeratorIdx],31);
+              monthlyData[key].denumerator = utils.sumArray(dailyData[denumeratorIdx],31);
+        
+              console.log("monthlyData[key].numerator",monthlyData[key].numerator);
+              console.log("monthlyData[key].denumerator",monthlyData[key].denumerator);
+              
+              if (monthlyData[key].denumerator == 0 && monthlyData[key].numerator != 0
+              ) {
+                  monthlyData[key].hasil = 100;
+              } else if (monthlyData[key].numerator == 0 && monthlyData[key].denumerator == 0
+              ) {
+                  monthlyData[key].hasil = 0;
+                  if (specialCalc && specialCalc.includes("zeroDenumeratorIsHundred")) {
+                      monthlyData[key].hasil = 100;
+                  }
+              } else {
+        
+                  monthlyData[key].hasil = monthlyData[key].numerator / monthlyData[key].denumerator;
+                  var target = result.data[key]['TARGET'].toLowerCase();
+                  
+                  if (target.includes("%")) {
+                    monthlyData[key].hasil = Math.round(monthlyData[key].hasil * 100 * 10000) / 10000;
+                  } else if (target.includes("‰")) {
+                    monthlyData[key].hasil = Math.round(monthlyData[key].hasil * 1000 * 10000) / 10000;
+                  } else {
+                    monthlyData[key].hasil = Math.round(monthlyData[key].hasil * 10000) / 10000;
+                }
+              }
+        
+              console.log("monthlyData[key].hasil",monthlyData[key].hasil);
+              numeratorIdx+=2;
+              denumeratorIdx+=2;
+            
+          }
+        });
+
+        console.log("monthlyData",monthlyData); 
+        console.log("dailyData",dailyData);
+  
+      } else {
+        console.log("No data or error occurred.");
+      }
+    });
+
+  };
+
+  $scope.dailyToMonthly2 = (dailyData, monthlyData, utils) => {
     var mappingArr = pmkpService.getMonthlyMapping($scope.currPage);
     var targetMonthly = pmkpService.getMonthlyTarget($scope.currPage);
     var specialCalcDailyToMonthly = pmkpService.getDailyMonthlySpecialHasilCalculation(
@@ -90,6 +187,7 @@ sikatApp.controller("formAController", function(
       }
     }
   };
+
   $scope.save = () => {
     $scope.dailyToMonthly($scope.dailyData, $scope.monthlyData, utils);
     pmkpService.save(
@@ -101,6 +199,7 @@ sikatApp.controller("formAController", function(
       $scope.monthlyData
     );
   };
+  
   $scope.getData = () => {
     $rootScope.loading = true;
     pmkpService.getData(
@@ -112,6 +211,7 @@ sikatApp.controller("formAController", function(
         $scope.dailyData = result.dailyData;
         $scope.monthlyData = result.monthlyData;
         data = [];
+        
         for (var i = 0; i < $scope.dailyNames.length; i++) {
           if (!$scope.dailyData[i]) {
             $scope.dailyData[i] = [];
@@ -119,8 +219,13 @@ sikatApp.controller("formAController", function(
               $scope.dailyData[i].push("");
             }
           }
-          var columnRefNo = $scope.monthlyMapping[Math.floor(i / 2)][0];
+
+          var columnRefNo = $scope.monthlyMapping.get($scope.dailyNames[i]);
+          console.log("columnRefNo:",columnRefNo);
+          console.log("iterator:",i);
           var rowData = [columnRefNo, $scope.dailyNames[i]];
+          console.log("rowData:",rowData);
+          console.log("dailyNames:",$scope.dailyNames[i]);
           for (var j = 0; j < 31; j++) {
             if (j < $scope.dailyData[i].length) {
               if (
@@ -139,6 +244,7 @@ sikatApp.controller("formAController", function(
           rowData.push("=SUM(C" + (i + 1) + ":AG" + (i + 1) + ")");
           data.push(rowData);
         }
+
         var colHeaders = ["Form B No.", "Name"];
         var colWidths = [110, 300];
         var colAlignments = ["center", "left"];
@@ -187,6 +293,7 @@ sikatApp.controller("formAController", function(
       () => ($rootScope.loading = false)
     );
   };
+  
   $scope.downloadExcel = () => {
     for (var i = 0; i < $scope.dailyData.length; i += 1) {
       for (var j = 0; j < $scope.dailyData[i].length; j += 1) {
@@ -227,19 +334,57 @@ sikatApp.controller("formBController", function(
 ) {
   $rootScope.currPage = $routeParams.id;
   $rootScope.currForm = "formB";
-  $scope.specialCalcDailyToMonthly = pmkpService.getDailyMonthlySpecialHasilCalculation(
-    $rootScope.currPage
-  );
-  $scope.monthlyNames = pmkpService.getMonthlyNames($rootScope.currPage);
-  $scope.monthlyDisable = pmkpService.getMonthlyDisable($rootScope.currPage);
+  $scope.specialCalcDailyToMonthly = {};//pmkpService.getDailyMonthlySpecialHasilCalculation($rootScope.currPage);
+  $scope.monthlyNames = {};//pmkpService.getMonthlyNames($rootScope.currPage);
+  $scope.monthlyDisable = [];//pmkpService.getMonthlyDisable($rootScope.currPage);
   $scope.monthNames = pmkpService.getMonthNames();
-  $scope.dailyNames = pmkpService.getDailyNames($scope.currPage);
+  $scope.dailyNames = {};//pmkpService.getDailyNames($scope.currPage);
+  $scope.dynamicId = {};
   $scope.dataId = null;
   $scope.typeSelect = $routeParams.id;
   var today = new Date();
   $scope.monthSelect = today.getMonth() + 1 + "";
   $scope.yearSelect = today.getFullYear() + "";
-  $scope.target = pmkpService.getMonthlyTarget($rootScope.currPage);
+  $scope.target = {};//pmkpService.getMonthlyTarget($rootScope.currPage);
+
+  pmkpService.getDynamicData($rootScope.currPage,2,result => {
+    if (result) {
+
+      console.log("Received data:", result.data);
+      $scope.monthlyNames = result.data.map(o => o.JUDUL);
+      $scope.specialCalcDailyToMonthly = result.data.map(o => o.DAILYMONTHLYSPECIAL);
+      $scope.target = result.data.map(o => o.TARGET);
+      $scope.dynamicId = result.data.map(o => o.LEVEL);
+
+      let iterator=0;
+      Object.keys(result.data).forEach(key => {
+        if(result.data[key]['STATUS']=='0'){
+          $scope.monthlyDisable[iterator] = [parseInt(key)+1,"numerator", "denumerator", "hasil"];
+          iterator++;
+        }
+        
+      });
+
+    } else {
+      console.log("No data or error occurred.");
+    }
+  });
+
+  console.log("$scope.monthlyDisable:", $scope.monthlyDisable);
+  for (var i = 0; i < $scope.monthlyDisable.length; i += 1) {
+    var disabledColumn = $scope.monthlyDisable[i];
+    console.log("disabledColumn:",disabledColumn);
+  }
+
+  pmkpService.getDynamicData($rootScope.currPage,1,result => {
+    if (result) {
+      console.log("Received data:", result.data);
+      $scope.dailyNames = result.data.map(o => o.JUDUL);
+    } else {
+      console.log("No data or error occurred.");
+    }
+  });
+
   $scope.filterMonthly = monthlyData => {
     for (var i = 0; i < $scope.monthlyNames.length; i++) {
       if (monthlyData[i]) {
@@ -253,11 +398,32 @@ sikatApp.controller("formBController", function(
         };
       }
     }
+
+    /*
     var mappingArr = pmkpService.getMonthlyMapping($rootScope.currPage);
     for (var i = 0; i < mappingArr.length; i++) {
       var mappingUnit = mappingArr[i];
+      console.log("mappingUnit",mappingUnit);
+      console.log("mappingUnit[0] - 1",mappingUnit[0] - 1);
       monthlyData[mappingUnit[0] - 1]["disable_hasil"] = true;
     }
+    */
+
+    pmkpService.getDynamicData($rootScope.currPage,2,result => {
+      if (result) {
+        console.log("Received data:", result.data);
+        Object.keys(result.data).forEach(key => {
+          if(result.data[key]['STATUS']=='0'){
+            monthlyData[key]["disable_hasil"] = true;
+          }
+        });
+  
+      } else {
+        console.log("No data or error occurred.");
+      }
+    });
+    console.log("monthlyData:", monthlyData);
+
     for (var i = 0; i < $scope.monthlyNames.length; i++) {
       var target = $scope.target[i].toLowerCase();
       if (target.includes("laporan")) {
@@ -306,6 +472,7 @@ sikatApp.controller("formBController", function(
       $scope.dailyData,
       $scope.monthlyData
     );
+
   $scope.getData = () => {
     $rootScope.loading = true;
     pmkpService.getData(
@@ -355,7 +522,7 @@ sikatApp.controller("formBController", function(
           "Target",
           "Analisa"
         ];
-        var colWidths = [300, 150, 150, 150, 150, 300];
+        var colWidths = [300,150, 150, 150, 150, 300];
         var colAlignments = [
           "left",
           "center",
@@ -674,7 +841,7 @@ sikatApp.controller("formBController", function(
                 monthlyDatum.denumerator == 0
               ) {
                 //monthlyDatum.hasil = 0;
-				monthlyDatum.hasil = 0; //edit mba astin
+				        monthlyDatum.hasil = 0; //edit mba astin
                 if (
                   specialCalc &&
                   specialCalc.includes("zeroDenumeratorIsHundred")
@@ -756,6 +923,7 @@ sikatApp.controller("formBController", function(
       () => ($rootScope.loading = false)
     );
   };
+
   $scope.downloadExcel = () => {
     for (var i = 0; i < $scope.dailyData.length; i += 1) {
       for (var j = 0; j < $scope.dailyData[i].length; j += 1) {

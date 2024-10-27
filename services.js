@@ -1461,10 +1461,10 @@ sikatApp.service("pmkpService", function($http) {
   };
   var monthlyMapping = {
     igd: [
-      [1, 1, 2],
-      [2, 3, 4],
-      [3, 5, 6],
-      [4, 7, 8],
+      [1, 1, 2],//0,1
+      [2, 3, 4],//2,3
+      [3, 5, 6],//4,5
+      [4, 7, 8],//6,7
       [5, 9, 10],
       [6, 11, 12],
       [7, 13, 14],
@@ -1473,12 +1473,7 @@ sikatApp.service("pmkpService", function($http) {
       [10, 19, 20],
       [11, 21, 22]
     ],
-    rawatJalan: [
-      [1, 1, 2],
-      [2, 3, 4],
-      [4, 5, 6]
-     
-    ],
+    rawatJalan: [ [1, 1, 2],[2, 3, 4],[4, 5, 6]],
     rawatInap: [
       [1, 1, 2],
       [2, 3, 4],
@@ -1701,7 +1696,7 @@ sikatApp.service("pmkpService", function($http) {
     return dailyDataList;
   };
   this.initMonthlyData = function(currPage) {
-    var monthlyDataList = [];
+    var monthlyDataList   = [];
     for (var i = 0; i < monthlyNames[currPage].length; i++) {
       monthlyDataList.push({
         numerator: "",
@@ -1715,6 +1710,12 @@ sikatApp.service("pmkpService", function($http) {
   this.getDailyNames = function(currPage) {
     return dailyNames[currPage];
   };
+
+  this.getDailyNamesDynamic = function(currPage){
+    console.log("this-->"+currPage);
+    return this.getDynamicData(currPage,1);
+  }
+
   this.getMonthlyNames = function(currPage) {
     return monthlyNames[currPage];
   };
@@ -1736,6 +1737,81 @@ sikatApp.service("pmkpService", function($http) {
   this.getMonthNames = function() {
     return monthNames;
   };
+
+  this.getDynamicData2 = function(
+    process_type,
+    type,
+    callbackFunc
+  ) {
+    var result = { data: null };
+    var instance = this;
+    $http
+      .get(
+        SERVER_URL +
+          "/api/dynamic/getHeaderData/proc_type/" +
+          process_type +
+          "/type/" +
+          type,
+        { headers: { Authorization: localStorage.getItem("token") } }
+      )
+      .then(
+        function(reqRes) {
+          console.log(reqRes.data);
+          if (reqRes.data && reqRes.data != "") {
+            result.data = reqRes.data;
+          }
+          callbackFunc(result);
+        },
+        function() {
+          //errorFunc();
+          $.toast({
+            heading: "Error",
+            text:
+              "Error happen when trying to get data on " +
+              process_type +
+              "-" +
+              type +
+              ", please try again or contact support.",
+            position: "top-right",
+            loaderBg: "#ff6849",
+            icon: "error",
+            hideAfter: 4000,
+            stack: 6
+          });
+        }
+      );
+  };
+
+  this.getDynamicData = function(process_type, type, callbackFunc) {
+    var result = { data: null };
+
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Open a synchronous GET request
+    xhr.open("GET", SERVER_URL + "/api/dynamic/getHeaderData/proc_type/" + process_type + "/type/" + type, false); // `false` makes it synchronous
+
+    // Set headers if needed
+    xhr.setRequestHeader("Authorization", localStorage.getItem("token"));
+
+    try {
+        // Send the request
+        xhr.send();
+
+        // Check the response status
+        if (xhr.status === 200) {
+            // Parse the response data if it is in JSON format
+            result.data = JSON.parse(xhr.responseText);
+        } else {
+            console.error("Error occurred: " + xhr.statusText);
+        }
+    } catch (error) {
+        console.error("Error occurred during AJAX call: ", error);
+    }
+
+    // Call the callback function with the result
+    callbackFunc(result);
+};
 
   this.getData = function(
     currPage,
