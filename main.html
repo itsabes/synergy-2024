@@ -346,7 +346,7 @@
       var REPORT_URL = "/sikat-report";
     </script>
    <!-- var REPORT_URL = "http://localhost:3000";
-    <!-- load angular and angular route via CDN -->
+     load angular and angular route via CDN -->
     <script src="assets/plugins/angular/angular.min.js"></script>
     <script src="assets/plugins/angular/angular-sanitize.js"></script>
     <script src="assets/plugins/angular/angular-route.min.js"></script>
@@ -566,6 +566,28 @@
                       href="#!/profile_indikator"
                       ng-class="[{active: currPage == 'profile_indikator'}]"
                       >Profile Indikator</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li ng-if="user_role !=='SIYUKO' ">
+                <a class="has-arrow" href="#" aria-expanded="false"
+                  ><i class="fas fa-cogs"></i
+                  ><span class="hide-menu">Manajemen <br>Data Mutu</span></a
+                >
+                <ul aria-expanded="true" class="collapse">
+                  <li>
+                    <a
+                      href="#!/indikatorMutu"
+                      ng-class="[{active: currPage == 'indikatorMutu'}]"
+                      >Pengajuan Indikator Mutu</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#!/lembarPdsa"
+                      ng-class="[{active: currPage == 'lembarPdsa'}]"
+                      >Lembar Kerja PDSA</a
                     >
                   </li>
                 </ul>

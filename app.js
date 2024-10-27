@@ -44,10 +44,25 @@ sikatApp.config(function ($routeProvider) {
       templateUrl: "pages/settings.html",
       controller: "settingsController"
     })
+<<<<<<< HEAD
     .when("/profile_indikator", {
       templateUrl: "pages/indikatorMutuList.html",
       controller: "indikatorMutuListController"
     })
+=======
+    .when("/indikatorMutu", {
+      templateUrl: "pages/indikatorMutuList.html",
+      controller: "indikatorMutuListController"
+    })
+    .when("/indikatorMutu_new", {
+      templateUrl: "pages/indikatorMutuNew.html",
+      controller: "indikatorMutuNewController"
+    })
+    .when("/indikatorMutu_edit", {
+      templateUrl: "pages/indikatorMutuEdit.html",
+      controller: "indikatorMutuEditController"
+    })
+>>>>>>> 8505c175ca2f8928f449d1c244937f54b7cdb725
     .when("/forma/:id", {
       templateUrl: "pages/forma.html",
       controller: "formAController"
@@ -59,6 +74,14 @@ sikatApp.config(function ($routeProvider) {
     .when("/rekap/:id", {
       templateUrl: "pages/rekap.html",
       controller: "rekapController"
+    })
+    .when("/analisaIndikator_new/", {
+      templateUrl: "pages/analisaIndikatorNew.html",
+      controller: "analisaIndikatorNewController"
+    })
+    .when("/analisaIndikator_edit/", {
+      templateUrl: "pages/analisaIndikatorEdit.html",
+      controller: "analisaIndikatorEditController"
     })
     .when("/ppi", {
       templateUrl: "pages/ppiList.html",
