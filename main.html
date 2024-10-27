@@ -555,21 +555,6 @@
                   ><span class="hide-menu">Settings</span></a
                 >
               </li>
-              <li ng-if="user_role ==='ADMIN'">
-                <a class="has-arrow" href="#" aria-expanded="false"
-                  ><i class="fas fa-allergies"></i
-                  ><span class="hide-menu">Manajemen Data Mutu</span></a
-                >
-                <ul aria-expanded="true" class="collapse">
-                  <li>
-                    <a
-                      href="#!/indikatorMutu"
-                      ng-class="[{active: currPage == 'indikatorMutu'}]"
-                      >Profile Indikator</a
-                    >
-                  </li>
-                </ul>
-              </li>
               <li ng-if="user_role !=='SIYUKO' ">
                 <a class="has-arrow" href="#" aria-expanded="false"
                   ><i class="fas fa-cogs"></i

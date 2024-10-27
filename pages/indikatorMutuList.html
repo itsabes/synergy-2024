@@ -1,92 +1,4 @@
 <div class="row page-titles">
-<<<<<<< HEAD
-  <div class="col-md-5 col-8 align-self-center">
-    <h3 class="text-themecolor m-b-0 m-t-0">Pengajuan Indikator Mutu - List</h3>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a href="javascript:void(0)">Home</a>
-      </li>
-      <li class="breadcrumb-item active">Pengajuan Indikator Mutu</li>
-    </ol>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-12">
-    <div class="card card-outline-info">
-      <div class="card-body">
-        <form class="form-horizontal">
-          <div class="form-group row">
-              <label
-                for="example-text-input"
-                class="col-xs-12 col-lg-2 col-form-label"
-                >Unit
-              </label>
-              <div class="col-xs-12 col-lg-10">
-                <input
-                  class="form-control"
-                  type="text"
-                  ng-model="typeUser" disabled
-                  />
-              </div>
-          </div>
-          <div class="form-group row">
-              <label
-                  for="example-month-input"
-                  class="col-xs-12 col-lg-2 col-form-label"
-                  >Month-Year</label
-              >
-              <div class="col-xs-12 col-lg-6">
-                <select
-                  class="custom-select col-12"
-                  ng-model="bulan"
-                >
-                  <option value="1">January</option>
-                  <option value="2">February</option>
-                  <option value="3">March</option>
-                  <option value="4">April</option>
-                  <option value="5">May</option>
-                  <option value="6">June</option>
-                  <option value="7">July</option>
-                  <option value="8">August</option>
-                  <option value="9">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
-                </select>
-              </div>
-              <div class="hidden-lg-up" style="height: 5px;">&nbsp;</div>
-              <div class="col-xs-12 col-lg-3">
-                <select
-                  class="custom-select col-12"
-                  ng-model="tahun"
-                >
-                  <option ng-repeat="n in yearRange" value="{{ n }}">{{
-                    n
-                  }}</option>
-                </select>
-              </div>
-            </div>
-          <div class="form-group row m-b-0">
-            <div class="offset-sm-3 col-sm-9">
-              <button type="button" class="btn btn-success waves-effect waves-light" ng-click="loadData()">
-                Cari Data
-              </button>
-              <button type="button" class="btn btn-success waves-effect waves-light" ng-click="addIndikatorMutu()">
-                <i class="fa fa-plus"></i> Pengajuan Indikator Mutu
-              </button>
-            </div>
-          </div>
-        </form>
-        <br />
-        <table ng-table="tableParams" class="table table-condensed table-bordered table-striped table-responsive"
-          show-filter="false">
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-=======
     <div class="col-md-5 col-8 align-self-center">
       <h3 class="text-themecolor m-b-0 m-t-0">Pengajuan Indikator Mutu - List</h3>
       <ol class="breadcrumb">
@@ -110,47 +22,23 @@
                   >Unit
                 </label>
                 <div class="col-xs-12 col-lg-10">
-                  <input
-                    class="form-control"
-                    type="text"
-                    ng-model="typeUser" disabled
-                    />
+                  <select class="custom-select col-12" ng-model="unit" aria-label="label for the select">
+                    <option ng-repeat="(key, value) in profileType" ng-value="{{value.ID}}" ng-selected="{{unit === value.ID}}"> {{ value.TYPE }}</option>
+                  </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label
                     for="example-month-input"
                     class="col-xs-12 col-lg-2 col-form-label"
-                    >Month-Year</label
-                >
-                <div class="col-xs-12 col-lg-6">
-                  <select
-                    class="custom-select col-12"
-                    ng-model="bulan"
-                  >
-                    <option value="1">January</option>
-                    <option value="2">February</option>
-                    <option value="3">March</option>
-                    <option value="4">April</option>
-                    <option value="5">May</option>
-                    <option value="6">June</option>
-                    <option value="7">July</option>
-                    <option value="8">August</option>
-                    <option value="9">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                  </select>
-                </div>
+                    >Year
+                </label>
                 <div class="hidden-lg-up" style="height: 5px;">&nbsp;</div>
                 <div class="col-xs-12 col-lg-3">
                   <select
                     class="custom-select col-12"
-                    ng-model="tahun"
-                  >
-                    <option ng-repeat="n in yearRange" value="{{ n }}">{{
-                      n
-                    }}</option>
+                    ng-model="tahun">
+                    <option ng-repeat="(key, n) in yearDynamic" value="{{ n }}" ng-selected="{{n == currentYear}}">{{ n }}</option>
                   </select>
                 </div>
               </div>
@@ -167,43 +55,41 @@
           </form>
           <br />
           <table ng-table="tableParams" class="table table-condensed table-bordered table-striped table-responsive"
-            show-filter="false">
-            <tr ng-repeat="row in $data track by $index">
-              <td title="'Daftar PPI'" sortable="'ppi_tanggal_list'">
-                <a style="display: block;" href="javascript:void(0)"
-                  ng-repeat="tanggal_ppi in row.ppi_tanggal_list.split(',') track by $index"
-                  ng-click="showIndikatorMutu(id_profilindikator)">{{ tanggal_ppi }}
-                </a>
-              </td>
-              <td title="'No Rawat'" sortable="'no_rawat'">
-                {{ row.no_rawat }}
-              </td>
-              <td title="'No Rekam Medis'" sortable="'no_rkm_medis'">
-                {{ row.no_rkm_medis }}
-              </td>
-              <td ng-if="currPageParam == 'ranap'" title="'Kode Kamar'" sortable="'kd_kamar'">
-                {{ row.kd_kamar }}
-              </td>
-  
-              <td title="'Nama Pasien'" sortable="'nm_pasien'">
-                {{ row.nm_pasien }}
-              </td>
-              <td title="'Nama Dokter'" sortable="'nm_dokter'">
-                {{ row.nm_dokter }}
-              </td>
-              <td title="'Tanggal Registrasi'" sortable="'tgl_registrasi'">
-                {{ row.tgl_registrasi }}
-              </td>
-              <td title="'Action'" sortable="'jumlah_ppi'">
-                <button type="button" class="btn btn-success waves-effect waves-light"
-                  ng-click="addPpi(row.no_rawat, row.no_rkm_medis, row.nm_pasien, row.nm_dokter, row.kd_kamar)">
-                  <i class="fa fa-plus"></i> PPI
+          show-filter="false">
+          <tr ng-repeat="row in $data track by $index">
+            <td title="'Judul'" sortable="'judul'">
+              {{ row.JUDUL_INDIKATOR }}
+            </td>
+            <td title="'Registrasi'" sortable="'tgl_registrasi'">
+              {{ row.CREATE_DATE }}
+            </td>
+            <td title="'Target'" sortable="'target'">
+              {{ row.TARGET }}
+            </td>
+            <td title="'Numerator'" sortable="'numerator'">
+              {{ row.NUMERATOR }}
+            </td>
+            <td title="'Denumerator'" sortable="'denumerator'">
+              {{ row.DENUMERATOR }}
+            </td>
+            <td title="'Acc Koordinator'">
+                <button type="button"
+                        class="btn waves-effect waves-light"
+                        ng-click="addPpi(row.no_rawat, row.no_rkm_medis, row.nm_pasien, row.nm_dokter, row.kd_kamar)"
+                        ng-class="{'btn-danger': row.STATUS === '1', 'btn-success inactive': row.STATUS === '0'}">
+                  <i class="fa" ng-class="{'fa-check': row.STATUS === '1', 'fa-plus': row.STATUS === '0'}"></i>
+                  {{ row.STATUS === '1' ? 'Disabled ACC' : 'ACC' }}
                 </button>
               </td>
-            </tr>
-          </table>
+            <td title="'Action'">
+              <button type="button" class="btn btn-success waves-effect waves-light"
+                ng-click="addPpi(row.no_rawat, row.no_rkm_medis, row.nm_pasien, row.nm_dokter, row.kd_kamar)">
+                <i class="fa fa-plus"></i> ADD
+              </button>
+            </td>
+          </tr>
+        </table>
         </div>
       </div>
     </div>
   </div>
->>>>>>> 8505c175ca2f8928f449d1c244937f54b7cdb725

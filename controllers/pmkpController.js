@@ -25,11 +25,11 @@ sikatApp.controller("formAController", function(
   pmkpService.getDynamicData($rootScope.currPage,1,result => {
     if (result) {
       console.log("Received data:", result.data);
-      $scope.dailyNames = result.data.map(o => o.JUDUL);
+      $scope.dailyNames = result.data.map(o => o.JUDUL_INDIKATOR);
 
       Object.keys(result.data).forEach(key => {
-        console.log(`${key}: ${result.data[key]['JUDUL']}`);
-        formAformBMapping.set(result.data[key]['JUDUL'],result.data[key]['LEVEL']);
+        console.log(`${key}: ${result.data[key]['JUDUL_INDIKATOR']}`);
+        formAformBMapping.set(result.data[key]['JUDUL_INDIKATOR'],result.data[key]['LEVEL']);
       });
 
     } else {
@@ -351,7 +351,7 @@ sikatApp.controller("formBController", function(
     if (result) {
 
       console.log("Received data:", result.data);
-      $scope.monthlyNames = result.data.map(o => o.JUDUL);
+      $scope.monthlyNames = result.data.map(o => o.JUDUL_INDIKATOR);
       $scope.specialCalcDailyToMonthly = result.data.map(o => o.DAILYMONTHLYSPECIAL);
       $scope.target = result.data.map(o => o.TARGET);
       $scope.dynamicId = result.data.map(o => o.LEVEL);
@@ -379,7 +379,7 @@ sikatApp.controller("formBController", function(
   pmkpService.getDynamicData($rootScope.currPage,1,result => {
     if (result) {
       console.log("Received data:", result.data);
-      $scope.dailyNames = result.data.map(o => o.JUDUL);
+      $scope.dailyNames = result.data.map(o => o.JUDUL_INDIKATOR);
     } else {
       console.log("No data or error occurred.");
     }

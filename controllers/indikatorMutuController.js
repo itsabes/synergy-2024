@@ -1,50 +1,68 @@
 sikatApp.controller("indikatorMutuListController", function(
   $scope,
   $rootScope,
+  $http,
+  $filter,
+  $location,
   $routeParams,
-  $http
+  NgTableParams
 ) {
-  $rootScope.currPage = "ppi";
+
+  $rootScope.currPage = "indikatorMutu";
   $rootScope.currPageParam = $routeParams.param;
-  $scope.tanggal = $routeParams.tanggal;
-  $scope.noRawat = $routeParams.noRawat;
-  $scope.noRekamMedis = $routeParams.noRekamMedis;
-  $scope.namaPasien = $routeParams.namaPasien;
-  $scope.namaDokter = $routeParams.namaDokter;
-  $scope.kodeKamar =
-    $routeParams.kodeKamar != "null" ? $routeParams.kodeKamar : "";
+  $scope.profileType = {};
+
+  $scope.tahun = "";
+  if ($routeParams.tahun) 
+    $scope.tahun = $routeParams.tahun;
+
+  $scope.unit = "";
+  if ($routeParams.unit) 
+    $scope.unit = $routeParams.unit;
+
+  $scope.yearDynamic = [];
+  const startYear = 2016;
+  const currentYear = new Date().getFullYear();
+  $scope.currentYear = currentYear;
+  for (let year = startYear; year <= currentYear; year++) {
+      $scope.yearDynamic.push(year);
+  }
+  
+
+  $scope.tableParams = new NgTableParams({}, { dataset: [] });
+  $scope.loadData = () => {
+    $location.url(
+      "/indikatorMutu?tahun=" +
+        ($scope.tahun ? $scope.tahun : "") +
+        "&unit=" +
+        ($scope.unit ? $scope.unit : "")
+    );
+  };
+
+  $scope.addIndikatorMutu = () => {
+    $location.url("/indikatorMutu_new");
+  };
+    
   $scope.getData = () => {
-    var url =
-      SERVER_URL + "/api/ppi?id=" + $scope.tanggal + ";" + $scope.noRawat;
+
+    var url = SERVER_URL + "/api/dynamic/getByQuery?q=0";
+    if ($scope.tahun) 
+      url += "&tahun=" + $scope.tahun;
+
+    if ($scope.unit) 
+      url += "&unit=" + $scope.unit;
+    
     $http
       .get(url, { headers: { Authorization: localStorage.getItem("token") } })
       .then(
         function(reqRes) {
           if (reqRes.data && reqRes.data != "") {
-            $scope.ett = reqRes.data.ETT - 0;
-            $scope.cvl = reqRes.data.CVL - 0;
-            $scope.ivl = reqRes.data.IVL - 0;
-            $scope.uc = reqRes.data.UC - 0;
-            $scope.vap = reqRes.data.VAP - 0;
-            $scope.iad = reqRes.data.IAD - 0;
-            $scope.pleb = reqRes.data.PLEB - 0;
-            $scope.isk = reqRes.data.ISK - 0;
-            $scope.ilo = reqRes.data.ILO - 0;
-            $scope.hap = reqRes.data.HAP - 0;
-            $scope.tinea = reqRes.data.Tinea - 0;
-            $scope.scabies = reqRes.data.Scabies - 0;
-            $scope.deku = reqRes.data.DEKU;
-            $scope.sputum = reqRes.data.SPUTUM;
-            $scope.darah = reqRes.data.DARAH;
-            $scope.urine = reqRes.data.URINE;
-            $scope.antibiotik = reqRes.data.ANTIBIOTIK;
-            $scope.kd_kamar = reqRes.data.kd_kamar;
-            $scope.tanggalSampel = reqRes.data.tgl_sampel;
-            $scope.tanggalKirim = reqRes.data.tgl_kirim;
-            $scope.tanggalHasil = reqRes.data.tgl_hasil;
-            $scope.mdr = reqRes.data.MDR - 0;
-            $scope.difteri = reqRes.data.DIFTERI - 0;
-            $scope.konsentrat = reqRes.data.KONSENTRAT;
+            $scope.tableParams = new NgTableParams(
+              {},
+              { dataset: reqRes.data }
+            );
+          } else {
+            $scope.tableParams = new NgTableParams({}, { dataset: [] });
           }
         },
         function() {
@@ -63,6 +81,48 @@ sikatApp.controller("indikatorMutuListController", function(
         }
       );
   };
+
+  $scope.getProcessTypeData = (callbackFunc) => {
+    var result = { data: null };
+
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Open a synchronous GET request
+    xhr.open("GET", SERVER_URL + "/api/dynamic/getProcessType", false); // `false` makes it synchronous
+
+    // Set headers if needed
+    xhr.setRequestHeader("Authorization", localStorage.getItem("token"));
+
+    try {
+        // Send the request
+        xhr.send();
+
+        // Check the response status
+        if (xhr.status === 200) {
+            // Parse the response data if it is in JSON format
+            result.data = JSON.parse(xhr.responseText);
+            //console.log("Received data:", result.data);
+
+        } else {
+            console.error("Error occurred: " + xhr.statusText);
+        }
+    } catch (error) {
+        console.error("Error occurred during AJAX call: ", error);
+    }
+
+    // Call the callback function with the result
+    callbackFunc(result);
+  };
+
+  $scope.getProcessTypeData(result => {
+    if (result) {
+      $scope.profileType = result.data;
+    } else {
+      console.log("No data or error occurred.");
+    }
+  });
+
   $scope.update = () => {
     $http
       .put(
@@ -106,6 +166,7 @@ sikatApp.controller("indikatorMutuListController", function(
         }
       );
   };
+
   $scope.delete = () => {
     var url =
       SERVER_URL +
@@ -138,8 +199,12 @@ sikatApp.controller("indikatorMutuListController", function(
         }
       );
   };
+  
   $scope.backToList = () => {
     window.history.back();
   };
+
   $scope.getData();
+  console.log("Received data:", $scope.profileType);
+
 });
