@@ -215,7 +215,10 @@ sikatApp.controller("indikatorMutuNewController", function(
   $routeParams,
   $http
 ) {
+
   $rootScope.currPage = "indikatorMutu";
+  $scope.profileType = {};
+  
   $scope.save = () => {
     $http
       .post(
@@ -223,14 +226,15 @@ sikatApp.controller("indikatorMutuNewController", function(
         {
           tahun: $scope.tahun,
           judulIndikator: $scope.judulIndikator,
+          unit : $scope.unit,
           dasarPemikiran: $scope.dasarPemikiran,
-          isEfisien: $scope.isEfisien,
-          isEfektif: $scope.isEfektif,
-          isTepatWaktu: $scope.isTepatWaktu,
-          isAman: $scope.isAman,
-          isAdil: $scope.isAdil,
-          isBerPasien: $scope.isBerPasien,
-          isIntegrasi: $scope.isIntegrasi,
+          isEfisien: $scope.isEfisien != null ? $scope.isEfisien : 0,
+          isEfektif: $scope.isEfektif != null ? $scope.isEfektif : 0,
+          isTepatWaktu: $scope.isTepatWaktu != null ? $scope.isTepatWaktu : 0,
+          isAman: $scope.isAman != null ? $scope.isAman : 0,
+          isAdil: $scope.isAdil != null ? $scope.isAdil : 0,
+          isBerPasien: $scope.isBerPasien != null ? $scope.isBerPasien : 0,
+          isIntegrasi: $scope.isIntegrasi != null ? $scope.isIntegrasi : 0,
           tujuan: $scope.tujuan,
           defPemikiran: $scope.defPemikiran,
           tipeIndikator: $scope.tipeIndikator,
@@ -247,7 +251,7 @@ sikatApp.controller("indikatorMutuNewController", function(
           metodePengumpulan: $scope.metodePengumpulan,
           populasiSampel: $scope.populasiSampel,
           isiSampel: $scope.isiSampel,
-          rencanaAnalisis: $scope.rencanaAnalisis,
+          rencanaAnalisis: $scope.rencanaAnalisis != null ? $scope.rencanaAnalisis : "",
           instrumenPengambilan: $scope.instrumenPengambilan,
           penanggungJawab: $scope.penanggungJawab
         },
@@ -263,6 +267,47 @@ sikatApp.controller("indikatorMutuNewController", function(
         }
       );
   };
+
+  $scope.getProcessTypeData = (callbackFunc) => {
+    var result = { data: null };
+
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Open a synchronous GET request
+    xhr.open("GET", SERVER_URL + "/api/dynamic/getProcessType", false); // `false` makes it synchronous
+
+    // Set headers if needed
+    xhr.setRequestHeader("Authorization", localStorage.getItem("token"));
+
+    try {
+        // Send the request
+        xhr.send();
+
+        // Check the response status
+        if (xhr.status === 200) {
+            // Parse the response data if it is in JSON format
+            result.data = JSON.parse(xhr.responseText);
+            //console.log("Received data:", result.data);
+
+        } else {
+            console.error("Error occurred: " + xhr.statusText);
+        }
+    } catch (error) {
+        console.error("Error occurred during AJAX call: ", error);
+    }
+
+    // Call the callback function with the result
+    callbackFunc(result);
+  };
+
+  $scope.getProcessTypeData(result => {
+    if (result) {
+      $scope.profileType = result.data;
+    } else {
+      console.log("No data or error occurred.");
+    }
+  });
 
   $scope.onSelectedPetugas = item => {
     $scope.petugas = item.nip;

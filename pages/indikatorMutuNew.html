@@ -31,6 +31,12 @@
                   <input type="text" ng-model="judulIndikator" class="form-control" />
                 </div>
                 <div class="form-group">
+                  <label class="control-label">Unit</label>
+                  <select class="custom-select col-12" ng-model="unit" aria-label="label for the select">
+                    <option ng-repeat="(key, value) in profileType" ng-value="{{value.ID}}" ng-selected="{{unit === value.ID}}"> {{ value.TYPE }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
                   <label class="control-label">Dasar Pemikiran</label>
                   <p style="font-size: 12px; ">*(1. Ketentuan/ Peraturan, 2. Data, 3. Literatur, dan 4. Analisis Situasi)</p>
                   <textarea
