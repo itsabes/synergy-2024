@@ -208,3 +208,88 @@ sikatApp.controller("indikatorMutuListController", function(
   console.log("Received data:", $scope.profileType);
 
 });
+
+sikatApp.controller("indikatorMutuNewController", function(
+  $scope,
+  $rootScope,
+  $routeParams,
+  $http
+) {
+  $rootScope.currPage = "indikatorMutu";
+  $scope.save = () => {
+    $http
+      .post(
+        SERVER_URL + "/api/indikatorMutu",
+        {
+          tahun: $scope.tahun,
+          judulIndikator: $scope.judulIndikator,
+          dasarPemikiran: $scope.dasarPemikiran,
+          isEfisien: $scope.isEfisien,
+          isEfektif: $scope.isEfektif,
+          isTepatWaktu: $scope.isTepatWaktu,
+          isAman: $scope.isAman,
+          isAdil: $scope.isAdil,
+          isBerPasien: $scope.isBerPasien,
+          isIntegrasi: $scope.isIntegrasi,
+          tujuan: $scope.tujuan,
+          defPemikiran: $scope.defPemikiran,
+          tipeIndikator: $scope.tipeIndikator,
+          ukuranIndikator: $scope.ukuranIndikator,
+          numerator: $scope.numerator,
+          denumerator: $scope.denumerator,
+          targetPencapaian: $scope.targetPencapaian,
+          kriteria: $scope.kriteria,
+          formula: $scope.formula,
+          sumberData: $scope.sumberData,
+          frekPengumpulan: $scope.frekPengumpulan,
+          periodePelaporan: $scope.periodePelaporan,
+          periodeAnalisa: $scope.periodeAnalisa,
+          metodePengumpulan: $scope.metodePengumpulan,
+          populasiSampel: $scope.populasiSampel,
+          isiSampel: $scope.isiSampel,
+          rencanaAnalisis: $scope.rencanaAnalisis,
+          instrumenPengambilan: $scope.instrumenPengambilan,
+          penanggungJawab: $scope.penanggungJawab
+        },
+        { headers: { Authorization: localStorage.getItem("token") } }
+      )
+      .then(
+        function(data) {
+          swal("Success!", "Data is successfully saved.", "success");
+          window.history.back();
+        },
+        function(data) {
+          swal("Error!", "Data is failed to be saved.", "error");
+        }
+      );
+  };
+
+  $scope.onSelectedPetugas = item => {
+    $scope.petugas = item.nip;
+  };
+  
+  $scope.searchPetugas = function($select) {
+    if ($select.search.length > 0) {
+      return $http
+        .get(SERVER_URL + "/api/indikatorMutu/allPetugasByQuery", {
+          params: {
+            searchstr: $select.search
+          },
+          headers: { Authorization: localStorage.getItem("token") }
+        })
+        .then(function(response) {
+          $scope.petugasList = response.data;
+        });
+    }
+    return false;
+  };
+
+  $scope.yearDynamic = [];
+  const startYear = 2023;
+  const currentYear = new Date().getFullYear();
+  $scope.currentYear = currentYear;
+  for (let year = startYear; year <= currentYear; year++) {
+      $scope.yearDynamic.push(year);
+  }
+
+});
