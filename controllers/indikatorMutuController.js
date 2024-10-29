@@ -12,9 +12,11 @@ sikatApp.controller("indikatorMutuListController", function(
   $rootScope.currPageParam = $routeParams.param;
   $scope.profileType = {};
 
-  $scope.tahun = "";
-  if ($routeParams.tahun) 
-    $scope.tahun = $routeParams.tahun;
+  // $scope.tahun = "";
+  // if ($routeParams.tahun) 
+  //   $scope.tahun = $routeParams.tahun;
+  var today = new Date();
+  $scope.tahun = today.getFullYear() + "";
 
   $scope.unit = "";
   if ($routeParams.unit) 
@@ -218,6 +220,8 @@ sikatApp.controller("indikatorMutuNewController", function(
 
   $rootScope.currPage = "indikatorMutu";
   $scope.profileType = {};
+  var today = new Date();
+  $scope.tahun = today.getFullYear() + "";
   
   $scope.save = () => {
     $http

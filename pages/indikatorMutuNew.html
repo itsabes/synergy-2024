@@ -1,3 +1,5 @@
+
+<script src="controllers/indikatorMutuController.js"></script>
 <div class="row page-titles">
   <div class="col-md-5 col-8 align-self-center">
     <h3 class="text-themecolor m-b-0 m-t-0">Pengajuan Indikator Mutu - New</h3>
@@ -21,9 +23,9 @@
             <div class="row align-items-start">
               <div class="col">
                 <div class="form-group">
-                  <label class="control-label">Tahun Kegiatan</label>
+                  <label class="control-label">Tahun</label>
                   <select class="custom-select col-12" ng-model="tahun">
-                    <option ng-repeat="(key, n) in yearDynamic" value="{{ n }}" ng-selected="{{n == currentYear}}">{{ n }}</option>
+                    <option ng-repeat="n in yearRange" value="{{ n }}">{{ n }}</option>
                   </select>
                 </div>
                 <div class="form-group">
